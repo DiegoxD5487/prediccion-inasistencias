@@ -106,7 +106,7 @@ El proyecto culmina en la interfaz interactiva autónoma contenida en **[index.h
    - En la sección *«¿Qué influyó más en su puntaje?»*, identifica las variables determinantes (tiempo de espera, inasistencias previas, etc.).
 4. **Simulación de Escenarios ("What-If"):**
    - En la misma ventana de explicación, reduce la anticipación de la cita a 0 días (*same-day appointment*).
-   - Observa la caída drástica en el puntaje predicho y la diferencia en puntos porcentuales, demostrando cómo el tiempo de espera prolongado condiciona el abandono.
+     - Observa el cambio en el puntaje predicho y la diferencia en puntos porcentuales. Es una comparación hipotética del modelo, no una medición del efecto causal de cambiar la espera.
 5. **Selector de Criterio / Umbral:**
    - En la barra lateral o cabecera, conmuta el umbral de **Máximo F1 (0.2219)** a **Recall objetivo 65% (0.2508)**.
    - Observa cómo se recalculan las alertas de riesgo y las tarjetas de métricas históricas de validación cruzada.
@@ -133,7 +133,7 @@ flowchart TD
 ### Resumen de Fases Analíticas
 
 * **`notebooks/01_Perfilamiento.ipynb`:** Evaluación de completitud (0 valores nulos, 0 filas duplicadas). Detección de 6 registros con edades inconsistentes (edades negativas `-1` y valores extremos `115`) y 5 citas donde la fecha agendada era posterior a la fecha de atención.
-* **`notebooks/02_Preprocesamiento.ipynb`:** Normalización temporal, cálculo de días de anticipación (`WaitingDays = AppointmentDay - ScheduledDay`), depuración de registros incoherentes y anonimización de identificadores. Dataset resultante: **110.521 filas y 62.298 pacientes**.
+* **`notebooks/02_Preprocesamiento.ipynb`:** Normalización temporal, cálculo de días de anticipación (`WaitingDays = AppointmentDay - ScheduledDay`), depuración de registros incoherentes y anonimización de identificadores. Dataset resultante: **110.521 filas y 62.299 pacientes**.
 * **`notebooks/03_EDA.ipynb`:** Descubrimiento de correlaciones determinantes:
   - Las citas agendadas para el mismo día (*same-day*) tienen una inasistencia de apenas ~4.6%, mientras que citas con más de 15 días de anticipación superan el 32%.
   - Fuerte reincidencia: pacientes con ausencias pasadas duplican la tasa de inasistencia promedio.
@@ -289,7 +289,7 @@ El entrenamiento completo se reprodujo con Python 3.12.4 tras reparar la ruta de
 
 Toda la documentación técnica, estratégica y metodológica se encuentra centralizada en la carpeta [`docs/`](docs/):
 
-* **[`docs/INFORME_GENERAL_PROYECTO.md`](docs/INFORME_GENERAL_PROYECTO.md):** Informe general de desarrollo del proyecto. Narra la génesis y ciclo de vida paso a paso, el marco metodológico integrado (CRISP-DM, Agile/Kanban, DataOps/MLOps y WBS), la bitácora cronológica día a día del sprint, la gestión de contingencias del Día 4 y el balance final de gobernanza y resultados.
+* **[`docs/INFORME_GENERAL_PROYECTO.md`](docs/INFORME_GENERAL_PROYECTO.md):** Informe general de desarrollo, etapas, metodología, bitácora del sprint, contingencia del Día 4 y resultados.
 * **[`docs/T01-documento.md`](docs/T01-documento.md):** Alcance, supuestos, matriz de riesgos (fuga de información, sesgos, transferencia de datos), restricciones operacionales y tablero Kanban del proyecto.
 * **[`docs/T02-problema_user_y_kpis.md`](docs/T02-problema_user_y_kpis.md):** Caracterización del usuario, valor esperado y umbrales cuantitativos de KPIs (calidad, desempeño M1-M3, operación O1-O2, gobernanza G1-G4).
 * **[`docs/T03-diccionario-datos.md`](docs/T03-diccionario-datos.md):** Ficha técnica de la fuente Kaggle y glosario de las 14 variables originales.
