@@ -1,0 +1,99 @@
+{
+  "startAt": 0,
+  "maxResults": 100,
+  "total": 9,
+  "isLast": true,
+  "appliedContentFormat": "html",
+  "comments": [
+    {
+      "id": "10014",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Avance y evidencia consolidada al 23/nov/2026</h2><p><strong>Registro retrospectivo de ejecución reportada.</strong> Esta entrada se incorpora ahora a partir del informe general y de los archivos existentes. La etapa indicada describe el relato del equipo y no cambia la fecha real de registro o de resolución en Jira.</p><p><strong>Etapa reportada:</strong> Seguimiento previsto jornadas 1–6. Cronología del informe consolidada retrospectivamente el 23/nov.</p><p><strong>Avance:</strong> Registro de desviación técnica/operativa de jornada 4, corrección reportada en jornada 5 y contraste de cierres administrativos. Se agregarán seis entradas retrospectivas por jornada.</p><p><strong>Entregables vinculados:</strong> <a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002\">Descargar paquete de evidencia</a> · <a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10001\">Informe principal</a> · <a href=\"https://duocuc-team-gestiondeproyectos.atlassian.net/browse/KAN-24\">Tarjeta central de documentos</a>.</p><p>Archivos dentro del paquete:</p><ul><li><p><code>output/pdf/Registro_Control_Desviaciones.pdf</code></p></li><li><p><code>docs/INFORME_GENERAL_PROYECTO.md</code></p></li><li><p><code>docs/evidencias/jira_estado_2026-11-23.json</code></p></li></ul><p><strong>Criterio y estado de verificación:</strong> Las entradas identifican el origen del relato. No se presentan como reuniones documentadas en tiempo real ni como aprobaciones de pares. Cierre de riesgos pendientes visible.</p><p><strong>Control:</strong> se conservan los vencimientos y las resoluciones existentes. Las revisiones personales de Alfredo y Diego deben registrarse cuando efectivamente se realicen.</p>",
+      "created": "2026-11-23T15:40:38.612-0300",
+      "updated": "2026-11-23T15:40:38.612-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10015",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Jornada 1 · 16/nov/2026 · Inicio y comprensión del negocio</h2><p><strong>Entrada retrospectiva incorporada el 23/nov/2026.</strong> Fuente: bitácora por jornada de docs/INFORME_GENERAL_PROYECTO.md. La fecha del título corresponde al período reportado y no a la creación de este comentario.</p><p><strong>Tareas:</strong> KAN-11 y KAN-12.</p><p><strong>Avance y entregables:</strong> El informe reporta definición de alcance, roles, restricciones y KPIs. Entregables existentes: docs/T01-documento.md y docs/T02-problema_user_y_kpis.md.</p><p><strong>Control, desviación y respuesta:</strong> El relato no informa impedimentos para esta jornada.</p><p><a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10001\">Informe principal</a> · <a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002\">Paquete con fuentes y registro de desviaciones</a>.</p>",
+      "created": "2026-11-23T15:41:06.718-0300",
+      "updated": "2026-11-23T15:41:06.718-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10016",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Jornada 2 · 17/nov/2026 · Fuente y diccionario</h2><p><strong>Entrada retrospectiva incorporada el 23/nov/2026.</strong> Fuente: bitácora por jornada de docs/INFORME_GENERAL_PROYECTO.md. La fecha del título corresponde al período reportado y no a la creación de este comentario.</p><p><strong>Tareas:</strong> KAN-13 y arranque de KAN-14.</p><p><strong>Avance y entregables:</strong> El informe reporta incorporación de Kaggle y elaboración del diccionario. Entregables existentes: dataset original y docs/T03-diccionario-datos.md.</p><p><strong>Control, desviación y respuesta:</strong> Se detecta necesidad de tipificar las fechas que venían como texto. Acción prevista: conversión explícita en el pipeline.</p><p><a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10001\">Informe principal</a> · <a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002\">Paquete con fuentes y registro de desviaciones</a>.</p>",
+      "created": "2026-11-23T15:41:07.709-0300",
+      "updated": "2026-11-23T15:41:07.709-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10017",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Jornada 3 · 18/nov/2026 · Calidad y preparación</h2><p><strong>Entrada retrospectiva incorporada el 23/nov/2026.</strong> Fuente: bitácora por jornada de docs/INFORME_GENERAL_PROYECTO.md. La fecha del título corresponde al período reportado y no a la creación de este comentario.</p><p><strong>Tareas:</strong> KAN-14, KAN-15 y avance transversal de KAN-24.</p><p><strong>Avance y entregables:</strong> El informe reporta cierre del perfilamiento y preparación. Evidencias: T04, notebooks 01–02 y CSV de 110.521 filas y 16 columnas.</p><p><strong>Control, desviación y respuesta:</strong> Anomalías de edad y coherencia temporal documentadas. Las exclusiones y transformaciones deben justificarse con su evidencia. El relato sitúa aquí el inicio de la documentación continua.</p><p><a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10001\">Informe principal</a> · <a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002\">Paquete con fuentes y registro de desviaciones</a>.</p>",
+      "created": "2026-11-23T15:41:08.443-0300",
+      "updated": "2026-11-23T15:41:08.443-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10018",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Jornada 4 · 19/nov/2026 · Desviación del plan y respuesta</h2><p><strong>Entrada retrospectiva incorporada el 23/nov/2026.</strong> Fuente: bitácora por jornada de docs/INFORME_GENERAL_PROYECTO.md. La fecha del título corresponde al período reportado y no a la creación de este comentario.</p><p><strong>Tareas:</strong> KAN-16, KAN-17 y seguimiento KAN-25.</p><p><strong>Avance y entregables:</strong> El informe describe interrupción de electricidad/conectividad y retraso del EDA, junto con revisión de métricas de entrenamiento que no acreditaban generalización.</p><p><strong>Control, desviación y respuesta:</strong> Impacto cualitativo relevante: T06 retrasada y T07 bloqueada según el relato. Respuesta reportada: reorganización, trabajo en parejas, historial con citas previas y validación agrupada por paciente. No se incluyen horas ni porcentajes de esfuerzo. Evidencia técnica actual: scripts/experimento_modelo.py, scripts/entrenar_modelo.py e informe del modelo.</p><p><a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10001\">Informe principal</a> · <a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002\">Paquete con fuentes y registro de desviaciones</a>.</p>",
+      "created": "2026-11-23T15:41:09.401-0300",
+      "updated": "2026-11-23T15:41:09.401-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10019",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Jornada 5 · 20/nov/2026 · Recuperación técnica y prototipo</h2><p><strong>Entrada retrospectiva incorporada el 23/nov/2026.</strong> Fuente: bitácora por jornada de docs/INFORME_GENERAL_PROYECTO.md. La fecha del título corresponde al período reportado y no a la creación de este comentario.</p><p><strong>Tareas:</strong> KAN-18, KAN-19, KAN-20 y KAN-21.</p><p><strong>Avance y entregables:</strong> El informe reporta recuperación de la secuencia técnica, ajuste del modelo, evaluación y desarrollo del dashboard. Existen el artefacto LightGBM, metricas.json e index.html.</p><p><strong>Control, desviación y respuesta:</strong> La corrección técnica queda respaldada por OOF y control temporal. La recuperación durante esta jornada es reportada por el equipo; el cierre administrativo registrado en Jira es posterior y no se modifica.</p><p><a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10001\">Informe principal</a> · <a href=\"https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002\">Paquete con fuentes y registro de desviaciones</a>.</p>",
+      "created": "2026-11-23T15:41:10.436-0300",
+      "updated": "2026-11-23T15:41:10.436-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10020",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Jornada 6 · 21/nov/2026 · Consolidación y preparación de exposición</h2><p><strong>Entrada retrospectiva incorporada el 23/nov/2026.</strong> Fuente: bitácora de docs/INFORME_GENERAL_PROYECTO.md y confirmación del equipo. La fecha del título identifica el período reportado, sin cambiar la fecha de creación del comentario.</p><p><strong>Tareas:</strong> KAN-22, KAN-23, KAN-24 y KAN-25.</p><p><strong>Avance declarado:</strong> pruebas, documentación base y materiales para la defensa terminados. El equipo confirmó expresamente que la exposición ante el profesor aún no ocurrió.</p><p><strong>Consolidación posterior del 23/nov:</strong> informe principal de ocho páginas, presentación de diez diapositivas y registro de desviaciones actualizados; capturas y verificación funcional de index.html conservadas. La ruta del entorno .venv fue reparada y el entrenamiento completo reprodujo las métricas vigentes, sin modificar las huellas del modelo, métricas e index.html. T14 y T15 quedaron finalizadas; T13 permanece en curso. Seis épicas cerradas y E6 abierta por T13.</p><p><strong>Control:</strong> se mantienen vencimientos, fechas de creación y resoluciones administrativas. Las fechas de ejecución declaradas y la versión ampliada de documentos del 23/nov se distinguen en la evidencia. Los archivos finales se centralizan en <a href=\"https://duocuc-team-gestiondeproyectos.atlassian.net/browse/KAN-24\">KAN-24</a>.</p>",
+      "created": "2026-11-23T15:41:11.396-0300",
+      "updated": "2026-11-23T16:05:11.848-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10029",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<h2>Confirmación del equipo y fechas de ejecución</h2><p>El equipo informa que cumplió la ejecución durante el cronograma y que faltó registrar oportunamente ese avance en Jira. Se incorporaron fechas de inicio y de término técnico declaradas en las descripciones de T01–T15, separadas de la fecha administrativa del registro.</p><p>Se mantiene la desviación documentada de T06/T07: contingencia el 19/nov y recuperación el 20/nov. Para T13, el usuario confirmó que solo están terminados los materiales: la exposición sigue pendiente.</p><p>La confirmación de ejecución del equipo complementa el informe y los entregables, pero no convierte las actualizaciones administrativas de hoy en comentarios creados durante jornadas anteriores. Las versiones de documentos consolidadas el 23/nov conservan esa fecha.</p>",
+      "created": "2026-11-23T15:47:14.698-0300",
+      "updated": "2026-11-23T15:47:14.698-0300",
+      "jsdPublic": true
+    },
+    {
+      "id": "10031",
+      "author": {
+        "displayName": "Diego Alonso Bustamante Belmar"
+      },
+      "body": "<p>Cierre de la consolidación del seguimiento: seis entradas retrospectivas por jornada, incidente T06/T07 del 19/11 y recuperación declarada el 20/11, acciones correctivas, riesgos residuales y vínculos a los productos. La carga administrativa se realiza el 23/11/2026 y no se interpreta como un registro contemporáneo de aquellas jornadas. El control distingue ejecución declarada y fechas automáticas de Jira. La reproducción técnica completa ya fue verificada. Se cierra el registro del prototipo; la exposición T13 y la futura validación de un piloto continúan según su alcance.</p>",
+      "created": "2026-11-23T15:57:09.153-0300",
+      "updated": "2026-11-23T15:57:09.153-0300",
+      "jsdPublic": true
+    }
+  ]
+}

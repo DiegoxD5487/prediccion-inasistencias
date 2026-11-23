@@ -1,0 +1,245 @@
+{
+  "fecha": "2026-11-23",
+  "tareas_finalizadas": 14,
+  "tareas_en_curso": [
+    {
+      "key": "KAN-23",
+      "resumen": "T13 · Presentación final",
+      "responsable": "Diego Alonso Bustamante Belmar"
+    }
+  ],
+  "epicas_finalizadas": 6,
+  "epicas_en_curso": [
+    "KAN-9"
+  ],
+  "informe_actualizado_adjunto": {
+    "key": "KAN-24",
+    "attachmentId": "10003",
+    "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003"
+  },
+  "enlaces_verificados": [
+    {
+      "key": "KAN-11",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T01 Inicio y alcance"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T01 · Inicio y alcance"
+        }
+      ]
+    },
+    {
+      "key": "KAN-12",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T02 Comprensión del negocio"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T02 · Comprensión del negocio"
+        }
+      ]
+    },
+    {
+      "key": "KAN-13",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T03 Fuente y diccionario"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T03 · Fuente y diccionario"
+        }
+      ]
+    },
+    {
+      "key": "KAN-14",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T04 Perfilamiento de calidad"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T04 · Perfilamiento de calidad"
+        }
+      ]
+    },
+    {
+      "key": "KAN-15",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T05 Preparación de datos"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T05 · Preparación de datos"
+        }
+      ]
+    },
+    {
+      "key": "KAN-16",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T06 EDA"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T06 · EDA"
+        }
+      ]
+    },
+    {
+      "key": "KAN-17",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T07 Baseline y partición"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T07 · Baseline y partición"
+        }
+      ]
+    },
+    {
+      "key": "KAN-18",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T08 Modelamiento"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T08 · Modelamiento"
+        }
+      ]
+    },
+    {
+      "key": "KAN-19",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T09 Evaluación"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T09 · Evaluación"
+        }
+      ]
+    },
+    {
+      "key": "KAN-20",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T10 Priorización top 20%"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T10 · Priorización top 20%"
+        }
+      ]
+    },
+    {
+      "key": "KAN-21",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T11 Prototipo visual"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T11 · Prototipo visual"
+        }
+      ]
+    },
+    {
+      "key": "KAN-22",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T12 Pruebas y consolidación"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T12 · Pruebas y consolidación"
+        }
+      ]
+    },
+    {
+      "key": "KAN-23",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T13 Presentación final"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T13 · Presentación final"
+        }
+      ]
+    },
+    {
+      "key": "KAN-24",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T14 Documentación continua"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T14 · Documentación continua (README y diapositivas)"
+        }
+      ]
+    },
+    {
+      "key": "KAN-25",
+      "enlace_informe_actualizado_verificado": true,
+      "enlaces": [
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+          "titulo": "Entregables y evidencia · T15 Riesgos e impedimentos"
+        },
+        {
+          "url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10003",
+          "titulo": "Informe actualizado · T15 · Registro de riesgos e impedimentos (revisión diaria)"
+        }
+      ]
+    }
+  ],
+  "archivos_preparados_con_carga_pendiente": [
+    "output/presentacion/Defensa_Proyecto_Inasistencias_Actualizada.pptx",
+    "output/pdf/Registro_Control_Desviaciones_Actualizado.pdf",
+    "output/jira/Evidencias_Proyecto_KAN_2026-11-23_Actualizado.zip"
+  ],
+  "alcance_fechas": "Ejecución declarada por el equipo; fechas automáticas y vencimientos conservados.",
+  "pruebas": {
+    "reproduccion_entrenamiento": "reproducido; tolerancia 1e-9",
+    "dashboard": "7 comprobaciones satisfactorias",
+    "presentacion": "10 diapositivas A/D 5 y 5; validación estructural y geométrica sin advertencias",
+    "informe_paginas": 8,
+    "registro_desviaciones_paginas": 3
+  }
+}

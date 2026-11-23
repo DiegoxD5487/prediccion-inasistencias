@@ -1,0 +1,192 @@
+{
+  "fecha": "2026-11-23",
+  "accion": "Conciliación retrospectiva de avance y enlaces a entregables",
+  "vencimientos_originales_conservados": true,
+  "enlaces_verificados": [
+    {
+      "key": "KAN-11",
+      "linked": true
+    },
+    {
+      "key": "KAN-12",
+      "linked": true
+    },
+    {
+      "key": "KAN-13",
+      "linked": true
+    },
+    {
+      "key": "KAN-14",
+      "linked": true
+    },
+    {
+      "key": "KAN-15",
+      "linked": true
+    },
+    {
+      "key": "KAN-16",
+      "linked": true
+    },
+    {
+      "key": "KAN-17",
+      "linked": true
+    },
+    {
+      "key": "KAN-18",
+      "linked": true
+    },
+    {
+      "key": "KAN-19",
+      "linked": true
+    },
+    {
+      "key": "KAN-20",
+      "linked": true
+    },
+    {
+      "key": "KAN-21",
+      "linked": true
+    },
+    {
+      "key": "KAN-22",
+      "linked": true
+    },
+    {
+      "key": "KAN-23",
+      "linked": true
+    },
+    {
+      "key": "KAN-24",
+      "linked": true
+    },
+    {
+      "key": "KAN-25",
+      "linked": true
+    }
+  ],
+  "epicas": [
+    {
+      "key": "KAN-4",
+      "estado": "Finalizado"
+    },
+    {
+      "key": "KAN-5",
+      "estado": "Finalizado"
+    },
+    {
+      "key": "KAN-6",
+      "estado": "Finalizado"
+    },
+    {
+      "key": "KAN-7",
+      "estado": "Finalizado"
+    },
+    {
+      "key": "KAN-8",
+      "estado": "Finalizado"
+    },
+    {
+      "key": "KAN-9",
+      "estado": "En curso"
+    },
+    {
+      "key": "KAN-10",
+      "estado": "En curso"
+    }
+  ],
+  "tareas": [
+    {
+      "key": "KAN-11",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-16",
+      "resolucion": "2026-11-21"
+    },
+    {
+      "key": "KAN-12",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-16",
+      "resolucion": "2026-11-22"
+    },
+    {
+      "key": "KAN-13",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-17",
+      "resolucion": "2026-11-22"
+    },
+    {
+      "key": "KAN-14",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-18",
+      "resolucion": "2026-11-22"
+    },
+    {
+      "key": "KAN-15",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-18",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-16",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-19",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-17",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-19",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-18",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-20",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-19",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-20",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-21",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-22",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion": "2026-11-23"
+    },
+    {
+      "key": "KAN-23",
+      "estado": "En curso",
+      "vencimiento": "2026-11-21",
+      "resolucion": null
+    },
+    {
+      "key": "KAN-24",
+      "estado": "En curso",
+      "vencimiento": "2026-11-20",
+      "resolucion": null
+    },
+    {
+      "key": "KAN-25",
+      "estado": "En curso",
+      "vencimiento": "2026-11-21",
+      "resolucion": null
+    }
+  ],
+  "informe_url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10001",
+  "paquete_url": "https://jira-prod-us-42-2.prod.atl-paas.net/rest/api/3/attachment/content/10002",
+  "naturaleza": "Fechas de ejecución reportadas en comentarios retrospectivos. Fechas de creación, resoluciones históricas y vencimientos sin reescritura."
+}

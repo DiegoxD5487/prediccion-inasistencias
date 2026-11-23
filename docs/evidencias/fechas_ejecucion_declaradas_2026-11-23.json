@@ -1,0 +1,158 @@
+{
+  "fecha_registro": "2026-11-23",
+  "origen": "Confirmación del usuario de ejecución conforme al cronograma e informe general. No registro oportuno en Jira.",
+  "alcance": "Fechas de inicio en campo editable y fin técnico declarado en descripción. Se preservan fechas de registro del sistema y vencimientos.",
+  "t13": "Materiales terminados; exposición pendiente según respuesta explícita del usuario.",
+  "verificacion": [
+    {
+      "key": "KAN-11",
+      "inicio_campo": "2026-11-16",
+      "fin_tecnico_declarado": "2026-11-16",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-16",
+      "resolucion_administrativa": "2026-11-21",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-12",
+      "inicio_campo": "2026-11-16",
+      "fin_tecnico_declarado": "2026-11-16",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-16",
+      "resolucion_administrativa": "2026-11-22",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-13",
+      "inicio_campo": "2026-11-17",
+      "fin_tecnico_declarado": "2026-11-17",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-17",
+      "resolucion_administrativa": "2026-11-22",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-14",
+      "inicio_campo": "2026-11-17",
+      "fin_tecnico_declarado": "2026-11-18",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-18",
+      "resolucion_administrativa": "2026-11-22",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-15",
+      "inicio_campo": "2026-11-18",
+      "fin_tecnico_declarado": "2026-11-18",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-18",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-16",
+      "inicio_campo": "2026-11-19",
+      "fin_tecnico_declarado": "2026-11-20",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-19",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-17",
+      "inicio_campo": "2026-11-19",
+      "fin_tecnico_declarado": "2026-11-20",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-19",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-18",
+      "inicio_campo": "2026-11-19",
+      "fin_tecnico_declarado": "2026-11-20",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-20",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-19",
+      "inicio_campo": "2026-11-20",
+      "fin_tecnico_declarado": "2026-11-20",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-20",
+      "inicio_campo": "2026-11-20",
+      "fin_tecnico_declarado": "2026-11-20",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-21",
+      "inicio_campo": "2026-11-20",
+      "fin_tecnico_declarado": "2026-11-20",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-22",
+      "inicio_campo": "2026-11-21",
+      "fin_tecnico_declarado": "2026-11-21",
+      "estado": "Finalizado",
+      "vencimiento": "2026-11-21",
+      "resolucion_administrativa": "2026-11-23",
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-23",
+      "inicio_campo": "2026-11-21",
+      "fin_tecnico_declarado": "2026-11-21",
+      "estado": "En curso",
+      "vencimiento": "2026-11-21",
+      "resolucion_administrativa": null,
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-24",
+      "inicio_campo": "2026-11-18",
+      "fin_tecnico_declarado": "2026-11-20",
+      "estado": "En curso",
+      "vencimiento": "2026-11-20",
+      "resolucion_administrativa": null,
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    },
+    {
+      "key": "KAN-25",
+      "inicio_campo": "2026-11-16",
+      "fin_tecnico_declarado": "2026-11-21",
+      "estado": "En curso",
+      "vencimiento": "2026-11-21",
+      "resolucion_administrativa": null,
+      "descripcion_verificada": true,
+      "vencimiento_original_conservado": true
+    }
+  ]
+}

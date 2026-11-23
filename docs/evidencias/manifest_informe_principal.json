@@ -1,0 +1,60 @@
+{
+  "fecha": "2026-11-23",
+  "informe": "output/pdf/Informe_Principal_EP5_EP6_Actualizado.pdf",
+  "paginas": 8,
+  "estado_entrega": "Documentación y riesgos consolidados; exposición pendiente",
+  "archivos": [
+    {
+      "ruta": "output/pdf/Informe_Principal_EP5_EP6_Actualizado.pdf",
+      "sha256": "2eab2fdb5a00f58fa09dbf0ef0280329a2cbf5da252f4845c74e5566957fb461"
+    },
+    {
+      "ruta": "docs/evidencias/dashboard_agenda_2026-11-23.png",
+      "sha256": "90423f556b558f12631f8660e239d38538e3555f4f76f91e66e6bf840c566939"
+    },
+    {
+      "ruta": "docs/evidencias/dashboard_probabilidad_2026-11-23.png",
+      "sha256": "78a25c79468a6dd13d3cc6c2b9dbbf5cc2150f96521499b7a9ab984d3910d935"
+    },
+    {
+      "ruta": "docs/evidencias/conciliacion_jira_2026-11-23.json",
+      "sha256": "344ef533e4a4611a3b7ee112b43dc137eedc493f53d923f68289916dfc276a52"
+    },
+    {
+      "ruta": "docs/evidencias/fechas_ejecucion_declaradas_2026-11-23.json",
+      "sha256": "f9695e095ae1d224f5bd577cedc64daa3756e9a97766e5469c1f14cbf99a2a98"
+    },
+    {
+      "ruta": "docs/evidencias/jira_estado_2026-11-23.json",
+      "sha256": "68c654775709de74cdb54897d3a4f0e8a784898e15e30ef3368f4affe9b93a82"
+    },
+    {
+      "ruta": "docs/evidencias/jira_estado_actualizado_2026-11-23.json",
+      "sha256": "b3e29d6d0d4cb6c7f440505851135c615a1e2ef2038c719b23a65c40b78a5120"
+    },
+    {
+      "ruta": "docs/evidencias/reproduccion_entrenamiento_2026-11-23.json",
+      "sha256": "917da7001d476498c44db3667a62249e83abe1eb1fcc1e7e2b169fa1bfc52705"
+    },
+    {
+      "ruta": "docs/evidencias/seguimiento_KAN25_2026-11-23.json",
+      "sha256": "43604723e8787d3bb2c39961d8281f9de344c127009ad09ed894fff8731910a5"
+    },
+    {
+      "ruta": "docs/evidencias/seguimiento_KAN25_actualizado_2026-11-23.json",
+      "sha256": "ed4a33b57dd16928f6986dcd6aa507507ef6f9d1c1f5de1b5ef14187ff0bcc6e"
+    },
+    {
+      "ruta": "docs/evidencias/verificacion_dashboard_2026-11-23.json",
+      "sha256": "a96c91c4f0f472c50da1d4ce095e619c1a2008acb184ff53cc36a81ea5f327dd"
+    },
+    {
+      "ruta": "models/metricas.json",
+      "sha256": "740b4dc902c0349f3ae46b5a4957f48f70556bdf208e3e26f0a0aeac17adae01"
+    },
+    {
+      "ruta": "index.html",
+      "sha256": "5a6c90a8c687a70f5dfb34dc1afd03099f09c4cfdd7913cf67cbb1dc00b450c4"
+    }
+  ]
+}

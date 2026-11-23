@@ -1,0 +1,38 @@
+# Entornos e instalaciones locales
+.venv/
+venv/
+env/
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Cachés y productos temporales de Python y notebooks
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+catboost_info/
+
+# Archivos y directorios locales de construcción
+.build_defensa/
+_temp_cell.txt
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Paquetes duplicados y versiones anteriores de entregables
+output/jira/
+output/pdf/Informe_Principal_EP5_EP6.pdf
+output/pdf/Registro_Control_Desviaciones.pdf
+output/presentacion/Defensa_Proyecto_Inasistencias.pptx
+output/presentacion/Defensa_Proyecto_Inasistencias_Actualizada.pptx
+output/presentacion/Defensa_Cliente_Storytelling.pptx
+Prototipo_Inasistencias_Gestion.html
+
+# Registros de validación específicos del equipo local
+docs/evidencias/validacion_presentacion_actualizada_2026-11-23.json

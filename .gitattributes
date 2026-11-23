@@ -1,0 +1,6 @@
+# Conservar los bytes de datos y evidencias para que sus huellas sigan siendo verificables.
+* -text
+*.pdf binary
+*.pptx binary
+*.joblib binary
+*.png binary
