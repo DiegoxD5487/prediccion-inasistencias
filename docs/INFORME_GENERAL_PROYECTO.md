@@ -14,6 +14,10 @@
 
 ## 1. Resumen Ejecutivo
 
+### Actualización posterior del prototipo
+
+El `index.html` vigente incorpora la versión EV3 de la agenda y mensajería simulada, recibida después del corte documentado a continuación. Incluye plantillas, comprobantes, estados de entrega y reintentos de SMS ficticios. No envía mensajes reales ni establece una conexión con Twilio. La definición de entregabilidad y el recorrido se detallan en [README-de-demo.md](README-de-demo.md). Los informes PDF, la presentación, las capturas y las huellas del corte anterior conservan su carácter histórico y pueden mostrar la interfaz previa. El objeto del modelo integrado conserva los mismos 1.050 árboles y 38 variables.
+
 ### Estado consolidado tras actualización de Jira
 
 Al cierre documental del 23 de noviembre de 2026, Jira registra **14 de 15 tareas finalizadas**. Solo **T13 (presentación final)** permanece en curso porque el equipo confirmó que los materiales están terminados y la exposición aún no se realiza. Las épicas E1–E5 y E7 están finalizadas y E6 continúa por T13. Las quince tareas tienen enlaces al paquete de entregables y fechas de ejecución declaradas por el equipo.

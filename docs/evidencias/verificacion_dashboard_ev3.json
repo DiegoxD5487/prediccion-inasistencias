@@ -1,0 +1,20 @@
+{
+  "prototipo": "EV3",
+  "archivo": "index.html",
+  "navegador": "Microsoft Edge",
+  "modo": "archivo local sin conexión",
+  "modelo": {
+    "trees": 1050,
+    "features": 38,
+    "rows": 12
+  },
+  "probabilidad_original": "57,4 %",
+  "escenario_anticipacion_cero": "6,6 %",
+  "entregabilidad_primer_intento": "100,0 %",
+  "entregabilidad_tras_reintento": "66,7 %",
+  "intentos_tras_recarga": 3,
+  "errores_javascript": [],
+  "solicitudes_http": [],
+  "sha256_index": "2bf4af1d91d192971e6085456d2287a31a8e763ca805784c6790edcbf6903b3b",
+  "modelo_integrado_identico_a_version_anterior": true
+}

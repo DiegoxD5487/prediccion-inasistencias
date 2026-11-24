@@ -48,7 +48,8 @@ Este proyecto desarrolla una solución analítica de extremo a extremo que:
 | :--- | :--- | :---: | :---: |
 | **Desempeño** | **M1. Recall de inasistencias** | $\ge 0.65$ | **Cumple (0.6500 a 0.7401)** |
 | **Priorización** | **M2. Lift@20 (Quintil superior)** | $\ge 1.50$ | **Cumple (2.0140)** |
-| **Operación** | **O1. Cobertura de priorización** | $18\% - 22\%$ | **Cumple (~20%)** |
+| **Operación** | **O1. Cobertura de priorización** | $18\% - 22\%$ | Depende del umbral y de las citas de la demo |
+| **Operación** | **O2. Entregabilidad SMS** | $\ge 95\%$ | Simulada; no mide entregas reales |
 | **Gobernanza** | **G3. Intervención no destructiva** | **0 cancelaciones automáticas** | **Cumple (0)** |
 | **Calidad** | **D1. Completitud de atributos** | $\ge 98\%$ | **Cumple (100%)** |
 
@@ -91,17 +92,18 @@ El proyecto culmina en la interfaz interactiva autónoma contenida en **[index.h
 * **Explicabilidad Transparente (XAI):** Muestra descomposiciones locales tipo SHAP para cada paciente en unidades log-odds, identificando qué factores aumentan o reducen la probabilidad predicha.
 * **Simulación "What-If":** Permite al usuario manipular variables como días de anticipación de reserva para observar en tiempo real la variación en la probabilidad de asistencia.
 * **Persistencia Local:** Las acciones registradas (llamadas, confirmaciones, notas de seguimiento) se guardan en `localStorage` del navegador.
+* **Mensajería simulada:** Permite editar plantillas, simular los estados de entrega de Twilio, consultar intentos y reintentar. La entregabilidad O2 usa entregas confirmadas / intentos enviados. No envía SMS reales ni se conecta a Twilio.
 
 ### Guion de Demostración (3 Minutos)
 
 1. **Presentación de la Agenda:** Abre [index.html](index.html) (presiona `F11` para pantalla completa). Se presenta la jornada del turno mañana (20 de mayo de 2016) con 12 pacientes simulados. Observa los tres indicadores superiores: total de citas, citas prioritarias sobre el umbral y pacientes contactados.
 2. **Priorización y Gestión de Riesgo:**
-   - Activa el filtro **Prioritarias** y ordena **Por hora**.
+   - Activa el filtro **Para revisión** y ordena por hora o por mayor riesgo.
    - Selecciona a la paciente **Clara Azevedo** (estimación de riesgo inicial ~57.4%).
-   - Presiona **Simular SMS** y revisa su bitácora de auditoría.
-   - Haz clic en **Registrar contacto → Asistencia confirmada** y observa la actualización del indicador de contactos.
+   - Presiona **Simular SMS con Twilio**, elige **Entrega confirmada** y pulsa **Simular envío**. El comprobante muestra estados simulados y se incorpora al registro.
+   - Cierra el comprobante, pulsa **Registrar contacto → Asistencia confirmada** y observa la actualización del indicador de contactos.
 3. **Explicabilidad del Puntaje (SHAP):**
-   - En la ficha de Clara, pulsa **Explicar este puntaje**.
+   - En la ficha de Clara, pulsa **Ver explicación** o entra en **Análisis del riesgo**.
    - Compara su probabilidad contra el umbral de corte.
    - En la sección *«¿Qué influyó más en su puntaje?»*, identifica las variables determinantes (tiempo de espera, inasistencias previas, etc.).
 4. **Simulación de Escenarios ("What-If"):**
@@ -111,6 +113,8 @@ El proyecto culmina en la interfaz interactiva autónoma contenida en **[index.h
    - En la barra lateral o cabecera, conmuta el umbral de **Máximo F1 (0.2219)** a **Recall objetivo 65% (0.2508)**.
    - Observa cómo se recalculan las alertas de riesgo y las tarjetas de métricas históricas de validación cruzada.
 6. **Reinicio del Simulacro:** Pulsa **Reiniciar simulacro** para vaciar la bitácora local y preparar otra presentación.
+
+En **Mensajería SMS** se pueden simular entregas fallidas, reintentos y confirmaciones posteriores. Cada intento tiene su comprobante. La tasa mostrada es un indicador de la jornada ficticia y no acredita entregabilidad real. El [guion de la demo](docs/README-de-demo.md) explica la secuencia y sus indicadores.
 
 ---
 
@@ -281,7 +285,7 @@ python .opencode/skills/gestor-ipynb/ipynb_tool.py run "notebooks/05_Modelamient
 
 Jira registra 14 de 15 tareas finalizadas. T13 sigue en curso porque los materiales están terminados y falta exponer. Las seis jornadas de seguimiento se documentan retrospectivamente; las fechas de ejecución declaradas se distinguen de las fechas automáticas del sistema.
 
-El entrenamiento completo se reprodujo con Python 3.12.4 tras reparar la ruta del entorno local. Las métricas coinciden con las vigentes con tolerancia absoluta de 1e-9 y se conservaron las huellas del modelo, métricas e `index.html`. [Resultado de reproducción](docs/evidencias/reproduccion_entrenamiento_2026-11-23.json). Para repetir la comparación sin reemplazar los artefactos vigentes, desde la raíz:
+El entrenamiento completo se reprodujo con Python 3.12.4 tras reparar la ruta del entorno local. Las métricas coincidieron con las vigentes con tolerancia absoluta de 1e-9; durante esa prueba se conservaron las huellas del modelo, las métricas y el HTML entonces vigente. El HTML fue reemplazado después por la versión EV3 de mensajería; su modelo integrado se conserva sin cambios. El [resultado histórico de reproducción](docs/evidencias/reproduccion_entrenamiento_2026-11-23.json) y las capturas con fecha del 23/nov corresponden a la versión anterior. Los PDF y la presentación de esa entrega también reflejan ese corte; para el recorrido y controles actuales, consultar el [guion EV3](docs/README-de-demo.md). Para repetir la comparación sin reemplazar los artefactos vigentes, desde la raíz:
 
 ```powershell
 .venv\Scripts\python.exe docs\evidencias\verificar_reproduccion_2026-11-23.py

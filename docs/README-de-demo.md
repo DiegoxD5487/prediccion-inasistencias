@@ -1,23 +1,36 @@
-# Hospital Aurora · Simulacro de gestión de citas
+# Hospital Aurora · Agenda y mensajería SMS
 
-Extrae el ZIP y abre **Agenda-hospitalaria.html** con doble clic en Chrome, Edge o Firefox actualizado. Usa **F11** para proyectar en Windows. El HTML incluye el modelo, los casos, los estilos y el código. Una vez descargado funciona sin internet, instalación, cuenta ni servidor.
+Abre **[index.html](../index.html)** desde la raíz del proyecto con Edge, Chrome o Firefox actualizado. En Windows, presiona **F11** para proyectar. El HTML contiene el modelo, el logotipo de Twilio y los recursos visuales. Funciona sin conexión.
 
-## Guion de tres minutos
+## Guion para presentar el circuito SMS
 
-1. En **Agenda hospitalaria**, presenta el turno de la mañana del 20 de mayo de 2016. Hay doce pacientes ficticios. Los indicadores muestran el número de citas, cuántas superan el umbral y cuántos pacientes tienen al menos un contacto directo registrado.
-2. Filtra por **Prioritarias**, pulsa **Por hora** para ordenar por riesgo y selecciona a **Clara Azevedo**. Su estimación original es aproximadamente 57,4 %. Pulsa **Simular SMS** y revisa su bitácora. Después usa **Registrar contacto → Asistencia confirmada**. Observa el indicador de contactos. **Dar seguimiento** permite registrar una gestión pendiente.
-3. Desde la ficha pulsa **Explicar este puntaje**. Lee la probabilidad de Clara y compara con el umbral para revisión. Cambia la anticipación a cero y observa el nuevo puntaje y la diferencia en puntos porcentuales. Los escenarios dejan intacta la cita original. La sección «¿Qué influyó más en su puntaje?» identifica los tres grupos de variables con mayor contribución a la predicción original.
-4. Cambia el criterio de **Máximo F1** a **Recall objetivo del 65 %**. Los indicadores históricos y el umbral cambian. El puntaje original depende de los datos de la cita. Vuelve a la ficha y prueba el filtro **En seguimiento**.
-5. Para preparar otra presentación usa **Reiniciar simulacro** y confirma. Las gestiones se conservan en el navegador cuando el almacenamiento local está disponible. Al bloquearlo, se mantienen durante la sesión.
+1. En **Agenda**, abre la ficha de **Clara Azevedo**. El modelo estima un riesgo de inasistencia del 57,4 %. Puedes buscar una cita, seleccionar una barra de «Riesgo por cita» u ordenar la lista por hora, riesgo o nombre.
+2. Pulsa **Simular SMS con Twilio**. Elige una plantilla, edita el texto y observa la vista previa. Selecciona **Entrega confirmada** y pulsa **Simular envío**. El comprobante avanza de «En cola» a «Enviado» y luego a «Entregado».
+3. Abre **Ver registro de envíos**. Tras completar el primer intento verás **1 entregado / 1 enviado = 100 %**. La bitácora de Clara también incluye el comprobante.
+4. En **Mensajería SMS**, elige una segunda cita, prepara otro SMS y selecciona **No entregado**. Al terminar, el indicador muestra **1 / 2 = 50 %**. En el comprobante pulsa **Reintentar SMS** y simula una entrega confirmada. La jornada acumulará **2 / 3 = 66,7 %**. Cada intento tiene un identificador propio.
+5. Para demostrar una confirmación tardía, usa otra cita y selecciona **Sin confirmación de entrega**. Una vez enviado, puedes cerrar y volver al comprobante. **Confirmar entrega** o **Marcar no entregado** actualiza el mismo intento.
+6. Usa **Reiniciar simulacro** para preparar la próxima exposición. Si el navegador permite almacenamiento local, conserva la bitácora y el criterio de priorización entre aperturas.
 
-## Qué representa el prototipo
+## Cómo interpretar los indicadores
 
-La agenda, los nombres, las especialidades, las horas de atención y las gestiones son ficticios. Los botones registran acciones dentro del simulacro. Las citas siguen programadas y el equipo mantiene la decisión de contacto. El riesgo representa una estimación cercana a la cita, con el estado previo del SMS conocido. Las gestiones posteriores quedan en la bitácora. El dato de SMS previo al cálculo se conserva para poder explicar el puntaje original.
+| Indicador | Cálculo en la demo | Referencia del proyecto |
+| --- | --- | --- |
+| Entregabilidad SMS (O2) | Intentos con entrega confirmada / intentos que alcanzaron «Enviado» | Cumple a partir del 95 %. Alerta desde el 90 % hasta menos del 95 %. |
+| Cobertura de priorización (O1) | Citas cuyo puntaje alcanza el umbral activo / 12 citas elegibles | Entre 18 % y 22 % |
+| Contacto registrado | Pacientes distintos con una conversación registrada por el equipo | Conteo operativo de la jornada |
 
-## Modelo, explicaciones y métricas
+Un intento en cola todavía no entra en el denominador de O2. Un envío pendiente de confirmación o con resultado «No entregado» sí entra. Si aún hay informes pendientes, el indicador es provisional. Antes del primer envío aparece un guion. Los datos de «SMS previo al puntaje» corresponden a la situación original de la cita y se usan en el modelo. Los intentos del turno pertenecen a la bitácora de gestión.
 
-La aplicación ejecuta los 1.050 árboles del artefacto mejor_modelo_lgbm.joblib. Utiliza sus 38 variables, su orden y sus categorías. La clase positiva es inasistencia. La jornada usa el período del dataset brasileño Kaggle 2016 y las reservas se simulan a las 07:00. Los perfiles con historial sitúan la última cita nueve días antes. Las condiciones de salud no declaradas en los casos ficticios quedan en cero.
+Estos valores ilustran el flujo mediante escenarios elegidos por quien presenta. La demo simula localmente los estados de Twilio Messaging con destinatarios ficticios. El envío real, la facturación de SMS y los informes de un operador requieren una integración de servidor independiente.
 
-Los aportes SHAP de cada ficha se calcularon con LightGBM sobre el caso original. Se sumaron por grupos de variables y se ordenaron por valor absoluto. Se muestran en unidades log-odds. El signo indica dirección respecto del valor de base del modelo. La comparación hipotética vuelve a evaluar todos los árboles con los datos modificados, incluidas las variables derivadas del día de reserva. Un cambio observado en el puntaje describe el comportamiento del modelo. La eficacia de una intervención requiere un estudio específico.
+## Cómo presentar el modelo
 
-El archivo metricas.json del proyecto contiene las métricas históricas por umbral, calculadas en validación cruzada de cinco grupos por paciente. Las tarjetas de desempeño describen esa evaluación, mientras que los contadores de la agenda describen la jornada ficticia.
+Abre **Ver explicación** desde la ficha o entra en **Análisis del riesgo**. La vista permite comparar el puntaje original con escenarios de anticipación e historial. Los aportes SHAP explican los tres grupos de variables de mayor magnitud en el caso original. Los botones de mensajería permiten gestionar esa cita manteniendo su predicción original como referencia.
+
+El prototipo usa el modelo LightGBM exportado por el equipo, con 1.050 árboles y 38 variables. Las categorías, los perfiles, sus aportes y las métricas históricas provienen del prototipo adjunto. Las métricas de clasificación corresponden a validación cruzada en cinco grupos por paciente sobre Kaggle Brasil 2016. Los contadores operativos se calculan con la jornada ficticia del 20 de mayo. Las horas de registro de los mensajes usan el reloj local del dispositivo.
+
+## Identidad visual
+
+El logotipo de Twilio se incluye desde el recurso oficial de la marca. [Twilio](https://www.twilio.com/content/dam/twilio-com/core-assets/customer-logos/t-z/twilio.svg)
+
+La fuente Inter se distribuye bajo la licencia SIL Open Font License, incluida en el HTML.
