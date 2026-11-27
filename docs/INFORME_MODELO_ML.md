@@ -43,11 +43,11 @@ El proyecto sigue una secuencia modular reflejada en los notebooks del repositor
 
 ## 3. Del Baseline Inicial al Modelo Mejorado
 
-En la fase inicial de [`notebooks/05_Modelamiento.ipynb`](notebooks/05_Modelamiento.ipynb), se entrenaron modelos de Gradient Boosting (LightGBM y CatBoost) sobre variables directas del preprocesamiento inicial.
+El baseline formal del [notebook 05](../notebooks/05_Modelamiento.ipynb) usa 14 variables numéricas y tres categóricas. Ajusta 300 árboles con tasa de aprendizaje 0.05, `is_unbalance=True` y semilla 42. `PatientId` identifica los cinco pliegues y se excluye de la matriz. CatBoost se exploró durante el desarrollo inicial.
 
 ### Limitaciones Identificadas en el Baseline
 * **Omisión de la historia causal del paciente:** El modelo no consideraba si el paciente ya se había atendido antes o cuántas veces había faltado.
-* **Distorsión por `is_unbalance=True` / `auto_class_weights='Balanced'`:** Forzar ponderaciones inversas de clases dentro de los algoritmos de árbol sesgó las probabilidades hacia arriba y comprimió las diferencias de riesgo relativo, reduciendo la efectividad del ranking (**Lift@20**).
+* **Distorsión por `is_unbalance=True`:** Forzar ponderaciones inversas de clases dentro de los algoritmos de árbol sesgó las probabilidades hacia arriba y comprimió las diferencias de riesgo relativo, reduciendo la efectividad del ranking (**Lift@20**).
 * **Falta de granularidad temporal y clínica:** No se capturaba la estacionalidad semanal ni la acumulación de factores de riesgo en adultos mayores.
 
 ### Mejoras Introducidas en el Modelo Definitivo
@@ -58,7 +58,7 @@ Se diseñó un mecanismo de cálculo histórico por paciente que previene **fuga
 * **Variables generadas:**
   * `PriorVisits`: Citas previas registradas.
   * `PriorNoShows`: Inasistencias previas acumuladas.
-  * `PriorNoShowRate`: Tasa de inasistencia histórica con **suavizado bayesiano empírico** ($\alpha = 20.0$), evitando extremos espurios en pacientes con pocas atenciones:
+  * `PriorNoShowRate`: Tasa de inasistencia histórica con **suavizado bayesiano empírico** ($\alpha = 20.0$), que conserva la prevalencia del archivo completo. Es una limitación de la evaluación: validar el suavizado en otro período exige estimar esa prevalencia dentro del entrenamiento. La fórmula aplicada es
     $$\text{PriorNoShowRate} = \frac{\text{PriorNoShows} + \alpha \cdot \text{TasaGlobal}}{\text{PriorVisits} + \alpha}$$
   * `HasHistory`: Indicador booleano de si el paciente cuenta con historial previo.
   * `DaysSinceLastVisit`: Días transcurridos desde la última cita.
@@ -74,15 +74,25 @@ Se diseñó un mecanismo de cálculo histórico por paciente que previene **fuga
 
 #### C. Optimización de Hiperparámetros con Optuna
 * **Objetivo de búsqueda:** Maximizar **PR-AUC (Precision-Recall AUC / Average Precision)** sobre un esquema `GroupKFold(3)` por `PatientId`.
-* **Eliminación de `is_unbalance=True`:** Se descartó el balanceo intrínseco de árboles; el balance de la solución se delega a la calibración del **umbral de corte posterior**, preservando probabilidades bien calibradas y un ranking superior.
-* **Hiperparámetros óptimos seleccionados (`models/mejores_hiperparametros.json`):**
-  * `n_estimators`: 1050
-  * `learning_rate`: 0.01053
-  * `max_depth`: 12
-  * `num_leaves`: 118
-  * `min_child_samples`: 49
-  * `subsample`: 0.7238
-  * `colsample_bytree`: 0.7412
+La búsqueda opcional usa un muestreador TPE con semilla 42, hasta 40 ensayos y un presupuesto de 600 segundos. La reproducción carga los valores seleccionados y ajusta el clasificador final sin ponderación de clases.
+
+| Hiperparámetro | Valor publicado |
+| --- | ---: |
+| `n_estimators` | `1050` |
+| `learning_rate` | `0.010458503793355878` |
+| `num_leaves` | `118` |
+| `max_depth` | `12` |
+| `min_child_samples` | `42` |
+| `subsample` | `0.9039510403749871` |
+| `colsample_bytree` | `0.5637759170174783` |
+| `reg_alpha` | `0.1247455263698487` |
+| `reg_lambda` | `0.004080079613243916` |
+| `min_split_gain` | `0.037248937387822256` |
+| `subsample_freq` | `1` |
+| `is_unbalance` | `False` |
+| `random_state` | `42` |
+| `verbose` | `-1` |
+| `n_jobs` | `8` |
 
 ---
 
@@ -93,15 +103,17 @@ Para garantizar que el modelo sea evaluado en condiciones idénticas a la realid
 
 ### Tabla Comparativa: Baseline vs. Modelo Mejorado (OOF)
 
-| Métrica | Baseline (Notebook 05) | Modelo Mejorado (`scripts/` y NB) | Diferencia Absoluta | Impacto / Interpretación |
-| :--- | :---: | :---: | :---: | :--- |
-| **ROC-AUC** | 0.7364 | **0.7535** | **+0.0171** | Mayor capacidad de discriminación global. |
-| **PR-AUC (Avg Prec)** | 0.3797 | **0.4103** | **+0.0306** | **Mejora sustancial** en la detección de la clase minoritaria. |
-| **F1-Score (Máximo)** | 0.4490 | **0.4628** | **+0.0138** | Mayor balance armónico entre precisión y recall. |
-| **Recall (F1 Óptimo)** | 0.7565 | 0.7401 | -0.0164 | Cobertura amplia de inasistencias. |
-| **Precision (F1 Óptimo)**| 0.3193 | **0.3366** | **+0.0173** | Menos falsos positivos al priorizar. |
-| **Lift@20** | 1.9311 | **2.0141** | **+0.0830** | El top 20% priorizado duplica la tasa de inasistencia global. |
-| **Recall@20** | 0.3862 | **0.4028** | **+0.0166** | Se captura el 40.28% de todas las ausencias en solo el 20% de llamadas. |
+| Métrica OOF | Baseline formal | Modelo final | Diferencia |
+| --- | ---: | ---: | ---: |
+| ROC-AUC | 0.7389 | 0.7535 | +0.0146 |
+| PR-AUC (precisión promedio) | 0.3841 | 0.4103 | +0.0262 |
+| F1 | 0.4499 | 0.4628 | +0.0129 |
+| Recall | 0.7602 | 0.7401 | -0.0200 |
+| Precisión | 0.3195 | 0.3366 | +0.0171 |
+| Lift@20 | 1.9331 | 2.0140 | +0.0809 |
+| Recall@20 | 0.3866 | 0.4028 | +0.0162 |
+
+La diferencia se calcula sobre valores completos. Para ambos estimadores, el F1 usa el máximo de su propia curva de precisión y recall OOF. El tamaño del grupo para Lift@20 se redondea al entero más cercano, 22.104 de 110.521 citas.
 
 > Nota metodológica: La última celda del notebook 05 original mostraba un ROC-AUC de 0.8170 y PR-AUC de 0.5123; esos valores estaban calculados sobre el conjunto de entrenamiento (sobreajuste). El rendimiento generalizable real ante pacientes no vistos es **ROC-AUC 0.7535** y **PR-AUC 0.4103**.
 
@@ -112,11 +124,12 @@ Para simular el despliegue en producción (entrenar con citas pasadas y predecir
 * **Entrenamiento:** 75.278 citas (hasta el 25 de mayo).
 * **Prueba Futura:** 35.243 citas (posteriores al 25 de mayo).
 
-| Métrica Temporal | Baseline Temporal | Modelo Mejorado Temporal |
-| :--- | :---: | :---: |
-| **ROC-AUC** | 0.7254 | **0.7303** |
-| **PR-AUC** | 0.3362 | **0.3458** |
-| **Lift@20** | 1.8417 | **1.8876** |
+| Métrica temporal | Baseline formal | Modelo final |
+| --- | ---: | ---: |
+| ROC-AUC | 0.7184 | 0.7303 |
+| PR-AUC (precisión promedio) | 0.3189 | 0.3458 |
+| Lift@20 | 1.7798 | 1.8876 |
+| Recall@20 | 0.3560 | 0.3775 |
 
 El modelo mejorado mantiene su superioridad predictiva y estabilidad ante el transcurso del tiempo.
 
@@ -128,8 +141,8 @@ En el documento normativo [`T02-problema_user_y_kpis.md`](T02-problema_user_y_kp
 
 | KPI | Meta de Referencia | Resultado Modelo Mejorado | Estado | Análisis Operativo |
 | :--- | :---: | :---: | :---: | :--- |
-| **M1. Recall de inasistencia** | $\ge 0.65$ (65%) | **0.6500** (umbral `0.2508`) / **0.7401** (umbral `0.2219`) | **CUMPLE** | Con el umbral operativo `0.2508`, la precisión se eleva a **35.36%** (frente a 33.97% del baseline), optimizando horas de llamada telefónica. |
-| **M2. Lift@20** | $\ge 1.50$ | **2.0141** | **CUMPLE** | Supera holgadamente el mínimo de 1.50. Concentra el doble de inasistencias en el quintil superior. |
+| **M1. Recall de inasistencia** | $\ge 0.65$ (65%) | **0.6500** (umbral `0.2508`) / **0.7401** (umbral `0.2219`) | **CUMPLE** | Con el umbral operativo `0.2508`, la precisión se eleva a **35.36%** (frente a 34.03% del baseline), optimizando horas de llamada telefónica. |
+| **M2. Lift@20** | $\ge 1.50$ | **2.0140** | **CUMPLE** | Supera holgadamente el mínimo de 1.50. Concentra el doble de inasistencias en el quintil superior. |
 | **G3. Intervención no destructiva** | 0 cancelaciones automáticas | **0 cancelaciones** | **CUMPLE** | El score predictivo se restringe exclusivamente a priorizar contactos de confirmación humana y recordatorios. |
 
 ---
@@ -139,33 +152,23 @@ En el documento normativo [`T02-problema_user_y_kpis.md`](T02-problema_user_y_kp
 El modelo se encuentra entrenado sobre el 100% del dataset preprocesado y almacenado de forma reproducible:
 
 * **Nombre de archivo:** `mejor_modelo_lgbm.joblib`
-* **Ruta en el repositorio:** [`models/mejor_modelo_lgbm.joblib`](models/mejor_modelo_lgbm.joblib)
+* **Ruta en el repositorio:** [`models/mejor_modelo_lgbm.joblib`](../models/mejor_modelo_lgbm.joblib)
 * **Tamaño:** 12.84 MB
 * **Formato:** Diccionario serializado con `joblib` conteniendo metadatos y modelos.
 
-### Estructura Interna del Payload (`payload`)
+### Estructura del archivo de inferencia
 
-```python
-{
-    "model": LGBMClassifier,            # Estimador final entrenado
-    "features": list[str],              # 38 características ordenadas
-    "numeric_features": list[str],      # 33 variables numéricas
-    "categorical_features": list[str],  # 5 variables categóricas
-    "categorical_categories": dict,     # Categorías conocidas por variable (Gender, Neighbourhood, etc.)
-    "threshold": 0.2219,                # Umbral de Máximo F1
-    "threshold_recall_065": 0.2508,     # Umbral de Negocio (KPI M1)
-    "metrics": dict,                    # Métricas de validación OOF
-    "metadata": dict                    # Versión, fecha y algoritmo
-}
-```
+`model` contiene el estimador. `features`, `numeric_features`, `categorical_features` y `categorical_categories` describen el orden y los valores admitidos. `target` y `positive_class` identifican la salida. `feature_defaults`, `history_mode` y `global_no_show_rate` definen el tratamiento del historial.
+
+`threshold` y `threshold_recall_065` almacenan los cortes exactos. `thresholds` incluye su precisión, recall y F1. `metrics_oof`, `baseline_oof` y `temporal` coinciden con sus secciones en `metricas.json`. El registro incluye `training_rows`, `training_patients`, `trained_at`, `params`, `lightgbm_version` y `nota`. [Ficha de inferencia](../models/README.md)
 
 > **Consistencia Categórica en Inferencia:** El diccionario incluye `categorical_categories`. Al predecir nuevas citas (por ejemplo, en un prototipo donde el usuario selecciona un único barrio), es mandatorio aplicar `pd.Categorical(df[col], categories=payload['categorical_categories'][col])` para evitar que pandas reasigne códigos numéricos erróneos a los árboles de decisión.
 
 ---
 
-## 7. Instrucciones para el Próximo Paso: Integración en el Prototipo
+## 7. Inferencia desde Python y en el prototipo
 
-Para la fase de construcción de la demo interactiva (prevista en `T01-documento.md`), el prototipo podrá cargar y consumir el modelo mediante el siguiente bloque estándar:
+La demo ejecuta los árboles en JavaScript. Una integración Python puede calcular la misma probabilidad con el estimador serializado.
 
 ```python
 from pathlib import Path
@@ -202,16 +205,15 @@ print(f"Priorizar para contacto telefónico preventivo: {priorizar_contacto}")
 Si un usuario ingresa una cita para un paciente nuevo sin antecedentes clínicos en el sistema:
 * `PriorVisits`: `0`
 * `PriorNoShows`: `0`
-* `PriorNoShowRate`: `0.2019` (tasa global del centro de salud)
+* `PriorNoShowRate`: `payload["global_no_show_rate"]` (prevalencia de entrenamiento)
 * `HasHistory`: `0`
 * `DaysSinceLastVisit`: `np.nan`
 * `LastVisitNoShow`: `np.nan`
 
 ---
 
-## 8. Sección Reservada: Extensión hacia el Prototipo
+## 8. Reproducción y evidencia
 
-*Esta sección queda lista para ser ampliada en la siguiente etapa:*
-1. **Arquitectura de la Aplicación:** Selección del framework de interfaz (Streamlit / Gradio / FastAPI / UI web gratuita conforme a las restricciones C1 y C2 de `T01`).
-2. **Flujo de Usuario:** Formulario de ingreso de datos de cita y paciente, visualización del semáforo de riesgo y tabla de citas priorizadas del día.
-3. **Manejo de Escenarios:** Scoring al momento del agendamiento vs. scoring previo al día de atención, y tratamiento de la variable `SMS_received`.
+El 26 de noviembre de 2026 el notebook 02 regeneró el CSV limpio y el notebook 05 se ejecutó desde un kernel nuevo. La comparación con el artefacto previo verificó los 1.050 árboles, el esquema categórico y 1.000 predicciones. Los PDF y la presentación del 23 de noviembre documentan la entrega académica de esa fecha. [Verificación de la refactorización](evidencias/refactorizacion_notebooks_2026-11-26.json)
+
+Consultar los comandos de ejecución desde la raíz en la [guía de reproducción](../README.md).

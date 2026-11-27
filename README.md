@@ -1,6 +1,6 @@
 # Predicción de Inasistencias a Citas Médicas · Hospital Aurora
 
-Prototipo integral de ciencia de datos y aprendizaje automático (*Machine Learning*) orientado a la gestión hospitalaria. El proyecto aborda la problemática de la inasistencia de pacientes a consultas programadas (*No-show*), abarcando desde la auditoría y depuración de datos crudos hasta el entrenamiento de un modelo **LightGBM** de alto rendimiento y su culminación en una **demostración interactiva autónoma en navegador ([index.html](index.html))**.
+Prototipo integral de ciencia de datos y aprendizaje automático (*Machine Learning*) orientado a la gestión hospitalaria. El proyecto aborda la problemática de la inasistencia de pacientes a consultas programadas (*No-show*), abarcando desde la auditoría y depuración de datos crudos hasta el entrenamiento de un modelo **LightGBM** de alto rendimiento y su culminación en una **demostración interactiva autónoma en navegador ([index_prototipo.html](index_prototipo.html))**.
 
 ---
 
@@ -31,7 +31,7 @@ En los sistemas de salud públicos y ambulatorios, una proporción considerable 
 Este proyecto desarrolla una solución analítica de extremo a extremo que:
 1. **Audita y transforma** más de 110.000 citas médicas del dataset *Medical Appointment No Shows* (Kaggle).
 2. **Entrena y optimiza** un modelo predictivo basado en Gradient Boosting (**LightGBM**, 1.050 árboles) calibrado para clasificar el riesgo de inasistencia mediante validación estricta por paciente (`GroupKFold`).
-3. **Despliega un simulacro interactivo de gestión hospitalaria en un archivo único ([index.html](index.html))**, capaz de ejecutar el modelo completo en JavaScript del lado del cliente, calcular explicaciones locales tipo SHAP y simular escenarios "what-if" sin requerir servidores, backend ni conexión a internet.
+3. **Despliega un simulacro interactivo de gestión hospitalaria en un archivo único ([index_prototipo.html](index_prototipo.html))**, capaz de ejecutar el modelo completo en JavaScript del lado del cliente, calcular explicaciones locales tipo SHAP y simular escenarios "what-if" sin requerir servidores, backend ni conexión a internet.
 
 ---
 
@@ -60,7 +60,7 @@ Este proyecto desarrolla una solución analítica de extremo a extremo que:
 
 ## 💻 Demostración Interactiva (`index.html`)
 
-El proyecto culmina en la interfaz interactiva autónoma contenida en **[index.html](index.html)**.
+El proyecto culmina en la interfaz interactiva autónoma contenida en **[index_prototipo.html](index_prototipo.html)**.
 
 ```
                   ┌──────────────────────────────────────────────┐
@@ -96,7 +96,7 @@ El proyecto culmina en la interfaz interactiva autónoma contenida en **[index.h
 
 ### Guion de Demostración (3 Minutos)
 
-1. **Presentación de la Agenda:** Abre [index.html](index.html) (presiona `F11` para pantalla completa). Se presenta la jornada del turno mañana (20 de mayo de 2016) con 12 pacientes simulados. Observa los tres indicadores superiores: total de citas, citas prioritarias sobre el umbral y pacientes contactados.
+1. **Presentación de la Agenda:** Abre [index_prototipo.html](index_prototipo.html) (presiona `F11` para pantalla completa). Se presenta la jornada del turno mañana (20 de mayo de 2016) con 12 pacientes simulados. Observa los tres indicadores superiores: total de citas, citas prioritarias sobre el umbral y pacientes contactados.
 2. **Priorización y Gestión de Riesgo:**
    - Activa el filtro **Para revisión** y ordena por hora o por mayor riesgo.
    - Selecciona a la paciente **Clara Azevedo** (estimación de riesgo inicial ~57.4%).
@@ -129,20 +129,20 @@ flowchart TD
     C --> D["Dataset Limpio<br>data/citas_medicas_preprocesadas.csv<br>(110.521 filas × 16 cols)"]
     D --> E["03_EDA.ipynb<br>Análisis Exploratorio y Patrones de Inasistencia"]
     D --> F["04_Baselines.ipynb<br>Dummy Classifier y Regresión Logística"]
-    D --> G["05_Modelamiento.ipynb / scripts/<br>Ingeniería Causal + LightGBM + Optuna"]
+    D --> G["05_Modelamiento.ipynb<br>Ingeniería Causal + LightGBM + Optuna"]
     G --> H["Artefacto Serializado<br>models/mejor_modelo_lgbm.joblib"]
     H --> I["Prototipo Interactivo en Navegador<br>index.html (Árboles JS + Interfaz)"]
 ```
 
 ### Resumen de Fases Analíticas
 
-* **`notebooks/01_Perfilamiento.ipynb`:** Evaluación de completitud (0 valores nulos, 0 filas duplicadas). Detección de 6 registros con edades inconsistentes (edades negativas `-1` y valores extremos `115`) y 5 citas donde la fecha agendada era posterior a la fecha de atención.
-* **`notebooks/02_Preprocesamiento.ipynb`:** Normalización temporal, cálculo de días de anticipación (`WaitingDays = AppointmentDay - ScheduledDay`), depuración de registros incoherentes y anonimización de identificadores. Dataset resultante: **110.521 filas y 62.299 pacientes**.
+* **`notebooks/01_Perfilamiento.ipynb`:** Evaluación de completitud (0 valores nulos, 0 filas duplicadas). Se identificaron una edad negativa, edades extremas de 115 años y cinco citas con fecha de agendamiento posterior a la atención. El notebook 02 excluye la edad negativa y las cinco citas con fechas incoherentes.
+* **`notebooks/02_Preprocesamiento.ipynb`:** Normalización temporal, cálculo de días de anticipación (`WaitingDays = AppointmentDay - ScheduledDay`), depuración de registros incoherentes y anonimización de identificadores. Dataset resultante: **110.521 filas y 62.298 pacientes**.
 * **`notebooks/03_EDA.ipynb`:** Descubrimiento de correlaciones determinantes:
   - Las citas agendadas para el mismo día (*same-day*) tienen una inasistencia de apenas ~4.6%, mientras que citas con más de 15 días de anticipación superan el 32%.
   - Fuerte reincidencia: pacientes con ausencias pasadas duplican la tasa de inasistencia promedio.
 * **`notebooks/04_Baselines.ipynb`:** Modelos de referencia iniciales. Un clasificador *Dummy* obtiene 79.8% de exactitud pero 0% de recall. La regresión logística balanceada alcanza recall de 55.9% con baja precisión (31.6%).
-* **`notebooks/05_Modelamiento.ipynb`:** Construcción de modelos avanzados de árboles potenciados (LightGBM, CatBoost), búsqueda bayesiana de hiperparámetros con Optuna y empaquetado del artefacto productivo.
+* **`notebooks/05_Modelamiento.ipynb`:** Baseline LightGBM de 17 variables, historial por cita, selección de hiperparámetros, validaciones agrupada y temporal y exportación del modelo final. La búsqueda con Optuna está incluida y se activa de forma opcional.
 
 ---
 
@@ -152,7 +152,7 @@ El modelo final es un **`LGBMClassifier`** entrenado con 38 características est
 
 ### Ingeniería de Características y Prevención de Fuga
 
-Para evitar la contaminación de información del futuro (*data leakage*) y simular con precisión la realidad hospitalaria, se implementó un **historial causal estricto** (`scripts/experimento_modelo.py`):
+El notebook 05 calcula el historial por paciente con las citas disponibles antes del día de atención. El suavizado usa la prevalencia del CSV completo, una limitación de esta versión.
 
 1. **Historial Causal por Paciente (`agregar_historial_causal`):**
    - Mediante búsqueda binaria (`np.searchsorted` con `side='left'`), cada cita solo consulta citas del mismo paciente con fecha de atención estrictamente anterior.
@@ -168,20 +168,27 @@ Para evitar la contaminación de información del futuro (*data leakage*) y simu
 
 La evaluación se realizó mediante **`GroupKFold(5)` agrupado por `PatientId`**, garantizando que los pacientes evaluados en validación nunca formaron parte del entrenamiento.
 
-| Métrica de Evaluación | Baseline (Notebook 05) | Modelo Mejorado (OOF) | Mejora Absoluta | Interpretación de Impacto |
-| :--- | :---: | :---: | :---: | :--- |
-| **ROC-AUC** | 0.7364 | **0.7535** | **+0.0171** | Mejor discriminación global entre clases. |
-| **PR-AUC (Avg Precision)** | 0.3797 | **0.4103** | **+0.0306** | Detección notablemente más precisa en la clase positiva. |
-| **F1-Score** | 0.4490 | **0.4628** | **+0.0137** | Mejor equilibrio armónico entre precisión y recall. |
-| **Recall (Inasistencias)** | 0.7565 | 0.7401 | -0.0164 | Cobertura amplia sobre pacientes que faltarán. |
-| **Precisión** | 0.3193 | **0.3366** | **+0.0173** | Menor tasa de falsos positivos en llamadas preventivas. |
-| **Lift@20** | 1.9311 | **2.0140** | **+0.0829** | **Supera ampliamente el KPI M2 ($\ge 1.50$)**. Duplica el riesgo base. |
-| **Recall@20** | 0.3862 | **0.4028** | **+0.0166** | **El 40.28% de todas las inasistencias se captura contactando solo al 20% superior**. |
+| Métrica OOF | Baseline formal | Modelo final | Diferencia |
+| --- | ---: | ---: | ---: |
+| ROC-AUC | 0.7389 | 0.7535 | +0.0146 |
+| PR-AUC (precisión promedio) | 0.3841 | 0.4103 | +0.0262 |
+| F1 | 0.4499 | 0.4628 | +0.0129 |
+| Recall | 0.7602 | 0.7401 | -0.0200 |
+| Precisión | 0.3195 | 0.3366 | +0.0171 |
+| Lift@20 | 1.9331 | 2.0140 | +0.0809 |
+| Recall@20 | 0.3866 | 0.4028 | +0.0162 |
+
+El baseline y el modelo final excluyen `PatientId` de sus entradas y eligen sus propios umbrales F1 sobre predicciones OOF. Para Lift@20 y Recall@20 se ordenan las citas por riesgo y se toman las primeras `round(0.20 × n)`, que aquí son 22.104.
 
 #### Validación Temporal Secundaria (Backtesting `2016-05-25`)
-Al entrenar con citas hasta el 25 de mayo y evaluar a futuro:
-* **ROC-AUC:** Sube de 0.7254 a **0.7303**.
-* **Lift@20:** Sube de 1.8417 a **1.8876**.
+La prueba reserva las citas posteriores al 25 de mayo de 2016.
+
+| Métrica temporal | Baseline formal | Modelo final |
+| --- | ---: | ---: |
+| ROC-AUC | 0.7184 | 0.7303 |
+| PR-AUC (precisión promedio) | 0.3189 | 0.3458 |
+| Lift@20 | 1.7798 | 1.8876 |
+| Recall@20 | 0.3560 | 0.3775 |
 
 ### Umbrales de Decisión Operativos
 
@@ -197,7 +204,8 @@ El modelo ofrece dos puntos de corte calibrados con predicciones fuera de pliegu
 ```text
 prediccion-inasistencias/
 │
-├── index.html                               # Demostración interactiva autónoma (1.050 árboles JS)
+├── index.html                               # Acceso al prototipo
+├── index_prototipo.html                     # Demostración interactiva autónoma (1.050 árboles JS)
 ├── AGENTS.md                                # Instrucciones operativas para agentes y entorno
 ├── README.md                                # Documentación principal del proyecto
 ├── requirements.txt                         # Dependencias de Python fijadas
@@ -221,17 +229,12 @@ prediccion-inasistencias/
 │   ├── mejores_hiperparametros.json         # Parámetros seleccionados por Optuna
 │   └── README.md                            # Ficha técnica del modelo y código de inferencia
 │
-├── notebooks/                               # Cuadernos Jupyter secuenciales
-│   ├── 01_Perfilamiento.ipynb               # 01: Calidad inicial y tipificación
-│   ├── 02_Preprocesamiento.ipynb            # 02: Limpieza, filtros y exportación del CSV limpio
-│   ├── 03_EDA.ipynb                         # 03: Análisis exploratorio de datos
-│   ├── 04_Baselines.ipynb                   # 04: Modelos base de referencia
-│   └── 05_Modelamiento.ipynb                # 05: Pipeline de modelamiento, OOF y exportación
-│
-└── scripts/                                 # Scripts modulares de Python
-    ├── experimento_modelo.py                # Ingeniería de features y evaluación reutilizable
-    ├── optimizar_modelo.py                  # Búsqueda bayesiana de hiperparámetros con Optuna
-    └── entrenar_modelo.py                   # Entrenamiento final y serialización del joblib
+└── notebooks/                               # Cuadernos Jupyter secuenciales
+    ├── 01_Perfilamiento.ipynb               # 01: Calidad inicial y tipificación
+    ├── 02_Preprocesamiento.ipynb            # 02: Limpieza, filtros y exportación del CSV limpio
+    ├── 03_EDA.ipynb                         # 03: Análisis exploratorio de datos
+    ├── 04_Baselines.ipynb                   # 04: Modelos base de referencia
+    └── 05_Modelamiento.ipynb                # 05: Pipeline de modelamiento, OOF y exportación
 ```
 
 ---
@@ -240,7 +243,7 @@ prediccion-inasistencias/
 
 ### 1. Ejecutar la Demo Interactiva (Sin Instalación)
 Para explorar la demostración de gestión hospitalaria:
-1. Haz doble clic en **[index.html](index.html)** para abrirlo en cualquier navegador web moderno.
+1. Haz doble clic en **[index_prototipo.html](index_prototipo.html)** para abrirlo en cualquier navegador web moderno.
 2. No requiere servidor local, conexión a internet ni dependencias adicionales.
 
 ### 2. Configuración del Entorno de Machine Learning (Python)
@@ -258,19 +261,16 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 3. Reproducción del Modelo Final
-Para reentrenar el modelo LightGBM con el 100% de los datos y regenerar [`models/mejor_modelo_lgbm.joblib`](models/mejor_modelo_lgbm.joblib) y [`models/metricas.json`](models/metricas.json):
+### 3. Reproducir los datos y el modelo
+
+Ejecutar desde la raíz con Python 3.12. Con el entorno virtual instalado, ejecutar los cuadernos en orden usando la raíz del repositorio como directorio de trabajo.
 
 ```powershell
-.venv\Scripts\python.exe scripts\entrenar_modelo.py
+.venv\Scripts\python.exe -c "import nbformat,sys; from nbconvert.preprocessors import ExecutePreprocessor; nb=nbformat.read(sys.argv[1],4); ExecutePreprocessor(timeout=900,kernel_name='python3').preprocess(nb,{'metadata':{'path':'.'}})" notebooks/02_Preprocesamiento.ipynb
+.venv\Scripts\python.exe -c "import nbformat,sys; from nbconvert.preprocessors import ExecutePreprocessor; nb=nbformat.read(sys.argv[1],4); ExecutePreprocessor(timeout=900,kernel_name='python3').preprocess(nb,{'metadata':{'path':'.'}})" notebooks/05_Modelamiento.ipynb
 ```
 
-### 4. Ejecución de Notebooks
-El repositorio cuenta con la herramienta estandarizada `gestor-ipynb` para ejecutar los notebooks localmente desde la raíz:
-
-```powershell
-python .opencode/skills/gestor-ipynb/ipynb_tool.py run "notebooks/05_Modelamiento.ipynb"
-```
+El cuaderno 02 regenera el CSV limpio. El 05 reutiliza `models/mejores_hiperparametros.json` y exporta el estimador y `models/metricas.json`. La configuración publicada usa 1.050 árboles, 118 hojas, profundidad 12 y tasa de aprendizaje 0.010458503793355878. La opción `EJECUTAR_OPTUNA` permite explorar hasta 40 ensayos con tres pliegues por paciente. Está desactivada en la reproducción.
 
 ---
 
@@ -279,17 +279,15 @@ python .opencode/skills/gestor-ipynb/ipynb_tool.py run "notebooks/05_Modelamient
 ### Entrega consolidada del 23 de noviembre de 2026
 
 - [Informe principal EP5/EP6 actualizado](output/pdf/Informe_Principal_EP5_EP6_Actualizado.pdf): ocho páginas con etapas, entregables, decisiones y contraste del plan con Jira.
-- [Presentación para el cliente](output/presentacion/Defensa_Cliente_Marcos_Ajustados.pptx): diez diapositivas con A/D y notas para la defensa.
+- [Presentación para el cliente](output/presentacion/PPT_Gestion_EV3.PPTX): presentación de la defensa en diez diapositivas.
 - [Registro actualizado de desviaciones](output/pdf/Registro_Control_Desviaciones_Actualizado.pdf): incidente T06/T07, respuesta, recuperación declarada y consolidación administrativa, sin horas de retraso.
 - [Evidencias técnicas y de seguimiento](docs/evidencias/): capturas, métricas reproducidas y cortes de estado. Los enlaces a Jira requieren acceso al tablero.
 
 Jira registra 14 de 15 tareas finalizadas. T13 sigue en curso porque los materiales están terminados y falta exponer. Las seis jornadas de seguimiento se documentan retrospectivamente; las fechas de ejecución declaradas se distinguen de las fechas automáticas del sistema.
 
-El entrenamiento completo se reprodujo con Python 3.12.4 tras reparar la ruta del entorno local. Las métricas coincidieron con las vigentes con tolerancia absoluta de 1e-9; durante esa prueba se conservaron las huellas del modelo, las métricas y el HTML entonces vigente. El HTML fue reemplazado después por la versión EV3 de mensajería; su modelo integrado se conserva sin cambios. El [resultado histórico de reproducción](docs/evidencias/reproduccion_entrenamiento_2026-11-23.json) y las capturas con fecha del 23/nov corresponden a la versión anterior. Los PDF y la presentación de esa entrega también reflejan ese corte; para el recorrido y controles actuales, consultar el [guion EV3](docs/README-de-demo.md). Para repetir la comparación sin reemplazar los artefactos vigentes, desde la raíz:
+El entrenamiento completo se reprodujo con Python 3.12.4 tras reparar la ruta del entorno local. Las métricas coincidieron con las vigentes con tolerancia absoluta de 1e-9; durante esa prueba se conservaron las huellas del modelo, las métricas y el HTML entonces vigente. El HTML fue reemplazado después por la versión EV3 de mensajería; su modelo integrado se conserva sin cambios. El [resultado histórico de reproducción](docs/evidencias/reproduccion_entrenamiento_2026-11-23.json) y las capturas con fecha del 23/nov corresponden a la versión anterior. Los PDF y la presentación de esa entrega también reflejan ese corte; para el recorrido y controles actuales, consultar el [guion EV3](docs/README-de-demo.md).
 
-```powershell
-.venv\Scripts\python.exe docs\evidencias\verificar_reproduccion_2026-11-23.py
-```
+El 26 de noviembre se reprodujeron los dos notebooks y se contrastaron el estimador anterior, el actual y el prototipo. La comprobación incluye las predicciones de una muestra fija de 1.000 citas. [Evidencia de la refactorización](docs/evidencias/refactorizacion_notebooks_2026-11-26.json)
 
 Toda la documentación técnica, estratégica y metodológica se encuentra centralizada en la carpeta [`docs/`](docs/):
 
@@ -299,7 +297,7 @@ Toda la documentación técnica, estratégica y metodológica se encuentra centr
 * **[`docs/T03-diccionario-datos.md`](docs/T03-diccionario-datos.md):** Ficha técnica de la fuente Kaggle y glosario de las 14 variables originales.
 * **[`docs/T04-calidad-datos.md`](docs/T04-calidad-datos.md):** Reporte de auditoría de datos, tratamiento de edades atípicas y coherencia temporal de fechas.
 * **[`docs/INFORME_MODELO_ML.md`](docs/INFORME_MODELO_ML.md):** Informe técnico completo del ciclo de vida del modelo ML, formulación matemática del suavizado bayesiano, curvas ROC/PR OOF e instrucciones de integración.
-* **[`docs/README-de-demo.md`](docs/README-de-demo.md):** Guion y especificaciones del simulacro clínico original.
+* **[`docs/README-de-demo.md`](docs/README-de-demo.md):** Guion y especificaciones de la demo EV3.
 
 ---
 

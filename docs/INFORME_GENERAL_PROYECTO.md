@@ -16,7 +16,7 @@
 
 ### Actualización posterior del prototipo
 
-El `index.html` vigente incorpora la versión EV3 de la agenda y mensajería simulada, recibida después del corte documentado a continuación. Incluye plantillas, comprobantes, estados de entrega y reintentos de SMS ficticios. No envía mensajes reales ni establece una conexión con Twilio. La definición de entregabilidad y el recorrido se detallan en [README-de-demo.md](README-de-demo.md). Los informes PDF, la presentación, las capturas y las huellas del corte anterior conservan su carácter histórico y pueden mostrar la interfaz previa. El objeto del modelo integrado conserva los mismos 1.050 árboles y 38 variables.
+El `index.html` vigente incorpora la versión EV3 de la agenda y mensajería simulada, recibida después del corte documentado a continuación. Incluye plantillas, comprobantes, estados de entrega y reintentos de SMS ficticios. No envía mensajes reales ni establece una conexión con Twilio. La definición de entregabilidad y el recorrido se detallan en [README-de-demo.md](README-de-demo.md). Los informes PDF, la presentación, las capturas y las huellas del corte anterior conservan su carácter histórico y pueden mostrar la interfaz previa. La revisión del 26 de noviembre reprodujo los dos notebooks, conservó los 1.050 árboles y las 38 variables e incorporó a la demo los umbrales exactos y el baseline formal. [Evidencia técnica](evidencias/refactorizacion_notebooks_2026-11-26.json)
 
 ### Estado consolidado tras actualización de Jira
 
@@ -38,7 +38,7 @@ El proyecto culminó exitosamente con la creación de una **demostración intera
 
 ## 2. Marco Metodológico Aplicado
 
-La ejecución del proyecto articuló cuatro marcos metodológicos complementarios, garantizando rigor científico, trazabilidad técnica, agilidad operativa y gobernanza de datos:
+El proyecto usó CRISP-DM para organizar el trabajo analítico, Kanban para dar seguimiento a las tareas y prácticas de gestión para documentar alcance, riesgos y entregables.
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────────────────┐
@@ -50,7 +50,7 @@ La ejecución del proyecto articuló cuatro marcos metodológicos complementario
 │ 1. Business Understand.│ • Tablero Jira (KAN)   │ • Gestión de Integración (Charter T01)  │
 │ 2. Data Understanding  │ • 7 Épicas (E1 a E7)   │ • Gestión del Alcance (WBS / EDT)       │
 │ 3. Data Preparation    │ • 15 Tareas (T01-T15)  │ • Gestión de Riesgos (Matriz R1-R8)     │
-│ 4. Modeling            │ • Standups diarios     │ • Gobernanza Stage-Gate (Puertas A, B, C)│
+│ 4. Modeling            │ • Standups diarios     │ • Revisión de entregables por etapa     │
 │ 5. Evaluation          │ • Control cruzado      │ • Gobernanza de Datos (DAMA-DMBOK)      │
 │ 6. Deployment          │ • Definition of Done   │ • Ética IA en Salud (Human-in-the-Loop) │
 └────────────────────────┴────────────────────────┴─────────────────────────────────────────┘
@@ -60,8 +60,8 @@ La ejecución del proyecto articuló cuatro marcos metodológicos complementario
 Estructuró las fases técnicas del ciclo de vida del dato:
 1. **Comprensión del Negocio (*Business Understanding*):** Formalización de objetivos, límites causales, costos operacionales y matriz de KPIs en [docs/T02-problema_user_y_kpis.md](../docs/T02-problema_user_y_kpis.md).
 2. **Comprensión de los Datos (*Data Understanding*):** Catalogación de la fuente Kaggle, diccionario de atributos en [docs/T03-diccionario-datos.md](../docs/T03-diccionario-datos.md), auditoría de calidad en [docs/T04-calidad-datos.md](../docs/T04-calidad-datos.md) y análisis exploratorio en `notebooks/03_EDA.ipynb`.
-3. **Preparación de Datos (*Data Preparation*):** Depuración de registros anómalos, imputación lógica, cálculo de brechas temporales (`WaitingDays`) y construcción de historiales causales libres de fuga en `notebooks/02_Preprocesamiento.ipynb`.
-4. **Modelado (*Modeling*):** Experimentación con modelos base (Dummy, Regresión Logística), árboles de decisión gradient boosting (LightGBM, CatBoost) y búsqueda bayesiana de hiperparámetros con Optuna en `scripts/optimizar_modelo.py`.
+3. **Preparación de datos (*Data Preparation*)**. El notebook 02 limpia las fechas, calcula `WaitingDays` y seudonimiza `PatientId`. El notebook 05 incorpora los antecedentes individuales de días previos.
+4. **Modelado (*Modeling*)**. Dummy y regresión logística se estudiaron como referencias preliminares. El cuaderno 05 contiene el baseline formal LightGBM de 17 variables, el modelo final de 38 y la búsqueda opcional con Optuna.
 5. **Evaluación (*Evaluation*):** Validación fuera de pliegue (*Out-Of-Fold*, OOF) y validación temporal (*backtesting*), confrontando métricas frente a los KPIs de negocio.
 6. **Despliegue (*Deployment*):** Construcción y validación del prototipo ejecutable standalone [index.html](../index.html).
 
@@ -72,9 +72,9 @@ Se implementó un flujo visual sobre Jira (proyecto clave `KAN`), estructurado e
 * **Definición de Terminado (*Definition of Done - DoD*):** Una tarjeta solo se dio por cerrada si contaba con su código ejecutable desde cero sin errores, artefacto enlazado, métricas trazables y documentación actualizada.
 * **Revisiones Diarias de Impedimentos (T15):** Reuniones breves de sincronización diaria para registrar bloqueos y ajustar el plan.
 
-### 2.3. DataOps y MLOps
-* **Trazabilidad y Reproducibilidad:** Semillas aleatorias fijadas (`random_state=42`), entorno virtual controlado (`requirements.txt`) y ejecución estandarizada con `gestor-ipynb`.
-* **Prevención de Contaminación Temporal (*Zero Leakage*):** Separación estricta entre pasado y futuro al calcular estadísticas de pacientes, empleando algoritmos de búsqueda binaria sobre series temporales ordenadas.
+### 2.3. Reproducción y trazabilidad del modelo
+* **Trazabilidad y Reproducibilidad:** Semillas aleatorias fijadas (`random_state=42`), entorno virtual controlado (`requirements.txt`) y ejecución de los notebooks desde la raíz del proyecto.
+* El historial individual excluye las citas de la misma fecha y las posteriores. La tasa global del suavizado se estima con el CSV completo.
 * **Gobernanza del Modelo:** Empaquetado de metadatos, listas de variables numéricas/categóricas y categorías fijadas dentro del payload serializado (`models/mejor_modelo_lgbm.joblib`) para asegurar inferencias consistentes.
 
 ### 2.4. Estándares PMBOK (PMI) y Enfoque de Gestión Híbrida
@@ -103,10 +103,10 @@ El proyecto incorporó las mejores prácticas del estándar **PMBOK (Project Man
 
 La gobernanza del proyecto garantizó que el desarrollo no fuera un mero ejercicio algorítmico aislado, sino una solución sujeta a controles normativos, organizacionales y éticos:
 
-#### A. Gobernanza de Proyectos y Puertas de Decisión (*Stage-Gate / Phase-Gate*)
-El proyecto estructuró su evolución a través de **Puertas de Decisión (*Stage Gates*)** que actúan como puntos de control *Go/No-Go*:
+#### A. Criterios de revisión por entregable
+El equipo definió criterios de revisión para los datos, el modelo y el prototipo.
 * **Puerta de Decisión A (Fin Paquete 2 - Datos y Privacidad):** Validación de la licitud de los datos, anonimización y controles de seguridad. *Criterio de aprobación:* Verificación de que el dataset Kaggle estuviera libre de identificadores personales sensibles y con diccionario completo antes de iniciar cualquier entrenamiento.
-* **Puerta de Decisión B (Fin Paquete 3 - Modelo Predictivo):** Verificación técnica de desempeño y equidad. *Criterio de aprobación:* Superar los umbrales mínimos de Recall $\ge 0.65$ y Lift@20 $\ge 1.50$, demostrando ausencia total de fuga temporal (*zero leakage*) mediante validación cruzada por paciente (`GroupKFold`).
+* **Puerta de Decisión B (Fin Paquete 3 - Modelo Predictivo):** Verificación técnica de desempeño y equidad. *Criterio de aprobación:* Superar los umbrales mínimos de Recall $\ge 0.65$ y Lift@20 $\ge 1.50$, separando pacientes entre entrenamiento y validación y excluyendo atenciones del mismo día del historial individual.
 * **Puerta de Decisión C (Fin Paquete 4 - Integración y Pruebas):** Control de calidad de la interfaz y seguridad operativa (*Go/No-Go* de demostración). *Criterio de aprobación:* Prueba de extremo a extremo que confirme que la interfaz [index.html](../index.html) no realiza conexiones no autorizadas y presenta advertencias visibles de simulación académica.
 
 #### B. Gobernanza de Datos (Alineada con DAMA-DMBOK)
@@ -163,7 +163,7 @@ A continuación se presenta el relato cronológico del equipo. Esta bitácora de
 * **Tareas Jira:** Cierre de `KAN-14` (T04 · Perfilamiento de calidad) y `KAN-15` (T05 · Preparación de datos).
 * **Actividades Ejecutadas:**
   - Alfredo completó el perfilamiento de datos ([docs/T04-calidad-datos.md](../docs/T04-calidad-datos.md)) en `notebooks/01_Perfilamiento.ipynb`. Se confirmó 0% de valores nulos y 0 duplicados exactos, pero se descubrieron anomalías críticas: **6 casos de edades inconsistentes** (-1 y 115 años) y **5 casos de fechas incoherentes** donde la cita ocurría antes de la fecha de agendamiento.
-  - Se implementó el pipeline reproducible en `notebooks/02_Preprocesamiento.ipynb`. Se eliminaron las 6 observaciones corruptas, se normalizaron los timestamps y se calculó la brecha de anticipación `WaitingDays = AppointmentDay - ScheduledDay`.
+  - Se implementó el pipeline reproducible en `notebooks/02_Preprocesamiento.ipynb`. Se excluyeron una cita con edad negativa y cinco con fechas incoherentes, se normalizaron los timestamps y se calculó la brecha de anticipación `WaitingDays = AppointmentDay - ScheduledDay`.
   - Se generó el dataset limpio de referencia: `data/citas_medicas_preprocesadas.csv` (**110.521 filas, 16 columnas y 62.298 pacientes únicos**).
 * **Entregables Logrados:** Reporte de calidad, notebook de preparación reproducible y dataset limpio exportado.
 * **Control Diario (T15):** Avance según cronograma. Se inició la documentación continua (T14).
@@ -177,24 +177,24 @@ Durante la jornada del Día 4, planificada para ejecutar el Análisis Explorator
 #### 1. Origen del Problema
 * **Falla de Infraestructura y Conectividad:** Durante el Día 4, el sector de residencia de Alfredo sufrió un corte eléctrico imprevisto acompañado de una caída en la red de internet, imposibilitando la entrega y consolidación de los gráficos de distribución y asociaciones del EDA.
 * **Revisión de la evaluación inicial:** El informe técnico `docs/INFORME_MODELO_ML.md` aclara que los valores **ROC-AUC de 0.8170** y **PR-AUC de 0.5123** procedían del conjunto de entrenamiento. Se descartaron como evidencia de generalización. Separadamente, el equipo reforzó los controles de fuga por paciente y disponibilidad temporal de las variables. 
-* La evaluación vigente agrupa por paciente y construye historial solo con citas anteriores. El valor histórico de Lift@20 = 1.18 citado en el relato inicial no aparece en `models/metricas.json` y no se utiliza como línea base verificable. La referencia reproducible del notebook 05 es **Lift@20 = 1.9311**.
+* La evaluación vigente agrupa por paciente y construye historial solo con citas anteriores. El valor histórico de Lift@20 = 1.18 citado en el relato inicial no aparece en `models/metricas.json` y no se utiliza como línea base verificable. La referencia reproducible del notebook 05 es **Lift@20 = 1.9331**.
 * **Situación al Cierre de la Jornada:** El relato del equipo registra un retraso de T06 y un bloqueo técnico de T07. La desviación se clasifica cualitativamente como relevante por su efecto sobre la evaluación y la integración posteriores.
 
 #### 2. Protocolo de Contingencia y Recuperación (Sprint Recovery)
 Tras recuperar la conectividad, el equipo reporta la activación de un protocolo de contingencia. La descripción se consolida como evidencia retrospectiva en [Registro de control de desviaciones](../output/pdf/Registro_Control_Desviaciones.pdf). `KAN-25` (T15) quedó consolidada con seis comentarios retrospectivos por jornada y el registro del incidente. Las entradas describen la ejecución reportada y conservan su fecha real de creación:
 1. **Sesión Intensiva de Programación en Parejas (*Pair Programming*):** Ambos integrantes trabajaron de forma colaborativa mediante llamada y pantalla compartida. Alfredo estructuró la lógica matemática de un **historial causal retrospectivo** para prevenir la fuga temporal: cada cita solo podría consultar citas anteriores de atención mediante búsqueda binaria (`np.searchsorted` con `side='left'`), aplicando suavizado bayesiano ($\alpha=20.0$) para evitar distorsiones en pacientes nuevos.
 2. **Reingeniería de la Validación:** Diego reconfiguró la partición a un esquema estricto de **`GroupKFold(5)` agrupado por `PatientId`**, garantizando que ningún paciente del conjunto de prueba hubiera sido visto durante el entrenamiento. Asimismo, se tomó la decisión técnica de **eliminar `is_unbalance=True`**, comprobando que el desbalanceo se debía corregir mediante la calibración posterior del umbral de decisión y no alterando los pesos de los árboles.
-3. **Automatización del ajuste:** Diego dejó ejecutándose en segundo plano el script `scripts/optimizar_modelo.py` con **Optuna**, explorando 50 ensayos sobre el espacio de hiperparámetros (profundidad, número de hojas, tasa de aprendizaje y submuestreo) optimizando directamente sobre PR-AUC.
+3. **Ajuste del modelo.** La bitácora atribuye a Diego la búsqueda con Optuna. El notebook 05 conserva el espacio de búsqueda y limita la ejecución a 40 ensayos o al presupuesto de tiempo. El JSON de hiperparámetros permite reproducir la configuración seleccionada. El proyecto no conserva un registro que acredite cuántos ensayos terminaron en la búsqueda original.
 
 #### 3. Resultado de la Recuperación
-Según la bitácora del equipo, durante el Día 5 concluyó el ajuste y se retomó el trabajo de evaluación y prototipo. Los scripts y métricas disponibles respaldan la corrección técnica. La fecha exacta de recuperación del cronograma no se acredita con el tablero: varios cierres administrativos se registran entre el 21 y el 23 de noviembre.
+Según la bitácora del equipo, durante el Día 5 concluyó el ajuste y se retomó el trabajo de evaluación y prototipo. El notebook 05 y las métricas reproducidas respaldan la corrección técnica. La fecha exacta de recuperación del cronograma no se acredita con el tablero: varios cierres administrativos se registran entre el 21 y el 23 de noviembre.
 
 ---
 
 ### Día 5 — Viernes 20 de Noviembre de 2026: Modelamiento Avanzado, Evaluación y Prototipado
 * **Tareas Jira:** `KAN-18` (T08 · Modelamiento), `KAN-19` (T09 · Evaluación), `KAN-20` (T10 · Priorización top 20%) y `KAN-21` (T11 · Prototipo visual).
 * **Actividades Ejecutadas:**
-  - Se formalizó el modelo definitivo en `scripts/entrenar_modelo.py` utilizando los mejores hiperparámetros de Optuna: **LightGBM con 1.050 árboles, `learning_rate=0.0105`, `num_leaves=118` y `max_depth=12`**.
+  - El modelo definitivo se reproduce hoy desde `notebooks/05_Modelamiento.ipynb` utilizando los mejores hiperparámetros de Optuna: **LightGBM con 1.050 árboles, `learning_rate=0.010458503793355878`, `num_leaves=118` y `max_depth=12`**.
   - Se calcularon las métricas fuera de pliegue (OOF) sobre las 110.521 observaciones: **ROC-AUC 0.7535**, **PR-AUC 0.4103**, **F1 0.4628** y **Lift@20 de 2.0140**, validando además la robustez temporal en backtesting (*corte 25 de mayo* con ROC-AUC 0.7303 y Lift@20 1.8876).
   - Se definieron los dos umbrales operativos: **0.2219 (F1 Óptimo)** y **0.2508 (KPI M1 Recall $\ge 65\%$ con precisión 35.36%)**.
   - Se exportó el artefacto final a `models/mejor_modelo_lgbm.joblib` y las métricas a `models/metricas.json`.
@@ -224,14 +224,14 @@ Esta sección desglosa las soluciones de ingeniería adoptadas y cómo reflejaro
 * **Decisión de Diseño:** En [docs/T02-problema_user_y_kpis.md](../docs/T02-problema_user_y_kpis.md) se definieron como métricas reinas el **Recall** (capturar la mayor cantidad de pacientes que faltarán) y el **Lift@20** (eficiencia en priorizar recursos en el quintil más riesgoso).
 * **Principio de Gobernanza:** Se estipuló el KPI **G3 (0 cancelaciones automáticas)**, garantizando que el modelo sea un instrumento de contacto preventivo y no de exclusión asistencial.
 
-### 4.2. Fase de Calidad y Preprocesamiento (CRISP-DM + DataOps)
+### 4.2. Fase de Calidad y Preprocesamiento (CRISP-DM)
 * **Reflejo Metodológico:** Aplicación de controles de calidad auditables con criterios de aceptación documentados.
 * **Tratamiento de Anomalías:**
-  - En `notebooks/01_Perfilamiento.ipynb` se registraron 6 registros con edades fuera de norma (-1 y 115) y 5 registros con inconsistencia temporal. Fueron excluidos de forma justificada en `notebooks/02_Preprocesamiento.ipynb`.
+  - El notebook 02 excluye una cita con edad negativa y cinco citas con agendamiento posterior a la atención. Conserva las edades altas observadas.
   - Generación de `WaitingDays`: variable clave que mide el tiempo de anticipación entre el agendamiento y la consulta.
 * **Resultado:** Reducción controlada de 110.527 a **110.521 filas**, preservando el 99.99% de los datos con 100% de integridad en atributos críticos (KPI D1 cumplido).
 
-### 4.3. Fase de Ingeniería de Características (CRISP-DM + MLOps)
+### 4.3. Fase de Ingeniería de Características (CRISP-DM)
 * **Reflejo Metodológico:** Enfoque *Data-Centric AI* con prevención matemática de fuga de información (*leakage*).
 * **Historial Causal Retrospectivo (`agregar_historial_causal`):**
   A diferencia de abordajes estándar que calculan promedios globales por paciente sobre todo el dataset, se diseñó una función causal estricta:
@@ -244,31 +244,31 @@ Esta sección desglosa las soluciones de ingeniería adoptadas y cómo reflejaro
   - `PriorNoShows`: Ausencias previas acumuladas.
   - `PriorNoShowRate`: Suavizado bayesiano empírico con constante $\alpha = 20.0$:
     $$\text{PriorNoShowRate} = \frac{\text{PriorNoShows} + 20.0 \times 0.2019}{\text{PriorVisits} + 20.0}$$
-    Esto evita que un paciente con una sola cita previa y una falta quede asignado espuriamente a 100% de riesgo.
+    La tasa global procede del CSV completo. Los antecedentes individuales se restringen a días anteriores. Para una validación prospectiva del suavizado se tendría que ajustar la tasa global dentro del período de entrenamiento.
   - `DaysSinceLastVisit`, `LastVisitNoShow`, `HasHistory`.
 * **Variables de Calendario y Clínicas:** `WaitingDaysLog` ($\ln(1 + \text{WaitingDays})$), `IsSameDay` (cita el mismo día), `ScheduledHour`, `ScheduledDayOfWeek`, `AppointmentWeek`, `IsSenior`, `IsChild`, `ChronicAndSenior` y `HasHandcap`. Totalizando **38 variables predictivas**.
 
-### 4.4. Fase de Modelamiento y Optimización (CRISP-DM + MLOps)
+### 4.4. Fase de Modelamiento y Optimización (CRISP-DM)
 * **Reflejo Metodológico:** Comparación sistemática de hipótesis bajo idénticas condiciones experimentales.
 * **Experimentación:**
-  - **Baseline:** Dummy (Accuracy 79.8%, Recall 0.0%) y Regresión Logística (Recall 55.9%, Precisión 31.6%).
-  - **LightGBM:** Superioridad clara sobre CatBoost en velocidad de convergencia y capacidad de ordenamiento.
-  - **Optimización con Optuna:** 50 iteraciones para maximizar PR-AUC sobre validación cruzada. Se descartó `is_unbalance=True`, ya que deformaba la calibración de probabilidades relativas.
-  - **Parámetros Finales:** 1.050 estimadores, tasa de aprendizaje de 0.01053, profundidad máxima 12, 118 hojas, submuestreo de 0.7238 y muestreo de columnas de 0.7412.
+  - **Referencias preliminares (notebook 04):** Dummy (Accuracy 79.8%, Recall 0.0%) y Regresión Logística (Recall 55.9%, Precisión 31.6%).
+  - **Baseline formal (notebook 05).** LightGBM con 17 variables y `GroupKFold(5)` permite medir el cambio frente al modelo final. CatBoost fue una exploración previa.
+  - **Optimización con Optuna.** La búsqueda opcional maximiza la precisión promedio en tres pliegues agrupados, con hasta 40 ensayos. El modelo final usa `is_unbalance=False`.
+  - **Parámetros finales.** 1.050 árboles, tasa de aprendizaje 0.010458503793355878, profundidad 12, 118 hojas, un mínimo de 42 registros por hoja, submuestreo de filas 0.9039510403749871 y de columnas 0.5637759170174783. [Configuración completa](../models/mejores_hiperparametros.json)
 
 ### 4.5. Fase de Evaluación Rigurosa (CRISP-DM)
-* **Reflejo Metodológico:** Validación no contaminada por paciente (`GroupKFold(5)` por `PatientId`) y validación temporal prospectiva.
+* **Reflejo Metodológico:** Cinco pliegues disjuntos por paciente y control temporal con citas posteriores al 25 de mayo de 2016.
 * **Resultados Consolidados:**
 
 | Métrica Evaluada | Baseline (Notebook 05) | Modelo Mejorado (OOF) | Meta KPI | Estado KPI |
 | :--- | :---: | :---: | :---: | :---: |
-| **ROC-AUC** | 0.7364 | **0.7535** | — | **Excelente** |
-| **PR-AUC** | 0.3797 | **0.4103** | — | **Excelente (+3.06 pp)** |
-| **F1-Score** | 0.4490 | **0.4628** | — | **Balance Óptimo** |
-| **Recall (Inasistencias)** | 0.7565 | **0.7401** / **0.6500** | $\ge 0.65$ | **CUMPLE (KPI M1)** |
-| **Precisión** | 0.3193 | **0.3366** / **0.3536** | — | **Mayor eficiencia en llamadas** |
-| **Lift@20 (Top 20%)** | 1.9311 | **2.0140** | $\ge 1.50$ | **CUMPLE (KPI M2, +34% sobre meta)** |
-| **Recall@20** | 0.3862 | **0.4028** | — | **40.28% capturado en el 20%** |
+| **ROC-AUC** | 0.7389 | **0.7535** | — | **Excelente** |
+| **PR-AUC** | 0.3841 | **0.4103** | — | **Excelente (+2.62 pp)** |
+| **F1-Score** | 0.4499 | **0.4628** | — | **Balance Óptimo** |
+| **Recall (Inasistencias)** | 0.7602 | **0.7401** / **0.6500** | $\ge 0.65$ | **CUMPLE (KPI M1)** |
+| **Precisión** | 0.3195 | **0.3366** / **0.3536** | — | **Mayor eficiencia en llamadas** |
+| **Lift@20 (Top 20%)** | 1.9331 | **2.0140** | $\ge 1.50$ | **CUMPLE (KPI M2, +34% sobre meta)** |
+| **Recall@20** | 0.3866 | **0.4028** | — | **40.28% capturado en el 20%** |
 
 * **Calibración de Umbrales:**
   1. *Umbral F1 Óptimo (`0.2219`):* Balance balanceado para máxima detección general ($F_1 = 0.4628$).
@@ -299,7 +299,7 @@ Estado contrastado con Jira al 23 de noviembre de 2026. Los criterios de la tabl
 | **T04 · Perfilamiento de calidad** (`KAN-14`) | E2 Calidad y preparación (`KAN-5`) | Diego (asig.) / Alfredo | **Finalizado** | 6 anomalías de edad y 5 de fechas identificadas con conteos y justificación en notebook 01. |
 | **T05 · Preparación de datos** (`KAN-15`) | E2 Calidad y preparación (`KAN-5`) | Diego (asig.) / Alfredo | **Finalizado** | Pipeline reproducible en notebook 02; dataset limpio derivado exportado (110.521 filas). |
 | **T06 · EDA** (`KAN-16`) | E3 Análisis exploratorio (`KAN-6`) | Diego (asig.) / Alfredo | **Finalizado** | Gráficos y análisis de correlación en notebook 03; efecto same-day y reincidencia descritos. |
-| **T07 · Baseline y partición** (`KAN-17`) | E4 Modelado y evaluación (`KAN-7`) | Alfredo (asig.) / Diego | **Finalizado** | Partición GroupKFold por paciente; detección y eliminación de fuga en notebook 04 y 05. |
+| **T07 · Baseline y partición** (`KAN-17`) | E4 Modelado y evaluación (`KAN-7`) | Alfredo (asig.) / Diego | **Finalizado** | El cuaderno 04 documenta referencias preliminares. El 05 evalúa el baseline formal con cinco pliegues separados por paciente. |
 | **T08 · Modelamiento** (`KAN-18`) | E4 Modelado y evaluación (`KAN-7`) | Alfredo (asig.) / Diego | **Finalizado** | LightGBM optimizado con Optuna (1.050 árboles); descarte justificado de is_unbalance. |
 | **T09 · Evaluación** (`KAN-19`) | E4 Modelado y evaluación (`KAN-7`) | Alfredo (asig.) / Diego | **Finalizado** | Métricas OOF calculadas (ROC-AUC 0.7535, PR-AUC 0.4103); validación temporal backtesting. |
 | **T10 · Priorización top 20%** (`KAN-20`) | E5 Ranking y prototipo (`KAN-8`) | Alfredo (asig.) / Diego | **Finalizado** | Lift@20 = 2.0140 calculado y verificado; regla de selección de quintil documentada. |
@@ -314,7 +314,7 @@ Estado contrastado con Jira al 23 de noviembre de 2026. Los criterios de la tabl
 1. **Riesgo R3 (Fuga de Información Temporal y por Paciente):**  
    *Impacto Mitigado:* Falsas expectativas de desempeño causadas por partición aleatoria ingenua. Se neutralizó mediante la reingeniería a `GroupKFold(5)` por `PatientId` y el cálculo de historiales únicamente sobre citas pasadas.
 2. **Riesgo R1 (Datos Anómalos):**  
-   *Impacto Mitigado:* Distorsión de distribuciones por edades -1 y 115. Fueron aisladas y descartadas en la fase de perfilamiento auditado.
+   *Impacto Mitigado:* El perfilamiento identificó edades atípicas. El notebook 02 excluyó la edad negativa y mantuvo las edades altas observadas.
 3. **Riesgo R7 (Transferencia Geográfica Brasil-Chile):**  
    *Impacto Mitigado:* Se mantuvo visible en todas las interfaces y reportes que los datos provienen de Vitória (Brasil), estableciendo que cualquier implantación local requerirá calibración previa.
 4. **Riesgo R8 (Decisiones Injustas o Automatizadas):**  
@@ -330,7 +330,7 @@ Estado contrastado con Jira al 23 de noviembre de 2026. Los criterios de la tabl
 3. **Documentación viva y continua (T14):** Avanzar en la redacción de informes y README en paralelo con el código evitó cuellos de botella en el cierre, permitiendo consolidar la entrega técnica sin estrés de última hora.
 
 ### 6.2. Conclusiones Técnicas
-1. **El valor del historial causal:** Incorporar la trayectoria de asistencia del paciente con suavizado bayesiano empírico fue el factor individual que mayor poder discriminante aportó al modelo (elevando el PR-AUC de 0.3797 a 0.4103).
+1. **Mejora del ranking.** El cambio conjunto de variables, historial e hiperparámetros elevó la PR-AUC del baseline formal de 0.3841 a 0.4103. La comparación mide la mejora conjunta de esas decisiones.
 2. **Desbalance resuelto en el umbral, no en el algoritmo:** Ponderar clases en LightGBM perjudicaba el ranking relativo. Mantener el entrenamiento con la distribución real y calibrar el umbral operativo a `0.2508` permitió satisfacer simultáneamente el Recall $\ge 65\%$ y elevar la precisión a 35.36%.
 3. **Despliegue sin fricciones:** Demostrar que un modelo complejo de 1.050 árboles puede transmutarse a un archivo HTML/JS autónomo de cero dependencias ([index.html](../index.html)) elimina todas las barreras operacionales y económicas de adopción para los equipos clínicos.
 

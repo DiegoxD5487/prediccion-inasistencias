@@ -1,6 +1,6 @@
 # Hospital Aurora · Agenda y mensajería SMS
 
-Abre **[index.html](../index.html)** desde la raíz del proyecto con Edge, Chrome o Firefox actualizado. En Windows, presiona **F11** para proyectar. El HTML contiene el modelo, el logotipo de Twilio y los recursos visuales. Funciona sin conexión.
+Abre **[index_prototipo.html](../index_prototipo.html)** para presentar o compartir la demo sin conexión. El archivo contiene el modelo y los recursos visuales. Desde la raíz del repositorio, `index.html` también abre el prototipo. En Windows, presiona **F11** para proyectar.
 
 ## Guion para presentar el circuito SMS
 
@@ -12,6 +12,10 @@ Abre **[index.html](../index.html)** desde la raíz del proyecto con Edge, Chrom
 6. Usa **Reiniciar simulacro** para preparar la próxima exposición. Si el navegador permite almacenamiento local, conserva la bitácora y el criterio de priorización entre aperturas.
 
 ## Cómo interpretar los indicadores
+
+![Agenda EV3 con las citas de la jornada y su riesgo de inasistencia](evidencias/dashboard_ev3_agenda.png)
+
+![Registro EV3 de SMS simulados con el resultado de cada intento](evidencias/dashboard_ev3_sms.png)
 
 | Indicador | Cálculo en la demo | Referencia del proyecto |
 | --- | --- | --- |
@@ -27,7 +31,9 @@ Estos valores ilustran el flujo mediante escenarios elegidos por quien presenta.
 
 Abre **Ver explicación** desde la ficha o entra en **Análisis del riesgo**. La vista permite comparar el puntaje original con escenarios de anticipación e historial. Los aportes SHAP explican los tres grupos de variables de mayor magnitud en el caso original. Los botones de mensajería permiten gestionar esa cita manteniendo su predicción original como referencia.
 
-El prototipo usa el modelo LightGBM exportado por el equipo, con 1.050 árboles y 38 variables. Las categorías, los perfiles, sus aportes y las métricas históricas provienen del prototipo adjunto. Las métricas de clasificación corresponden a validación cruzada en cinco grupos por paciente sobre Kaggle Brasil 2016. Los contadores operativos se calculan con la jornada ficticia del 20 de mayo. Las horas de registro de los mensajes usan el reloj local del dispositivo.
+El prototipo usa el modelo LightGBM exportado por el equipo, con 1.050 árboles y 38 variables. Las categorías, los perfiles y sus aportes proceden del prototipo EV3. Las métricas de clasificación y los dos umbrales se consultan en la validación fuera de pliegue del notebook 05, con cinco pliegues agrupados por paciente sobre Kaggle Brasil 2016. El criterio M1 prioriza las citas cuyo puntaje alcanza el umbral con mayor precisión entre los que cumplen recall ≥ 65 %. Los contadores operativos se calculan con la jornada ficticia del 20 de mayo. Las horas de registro de los mensajes usan el reloj local del dispositivo.
+
+La prueba funcional de EV3 documenta el circuito SMS en la versión que se recibió originalmente. La comprobación posterior registra la correspondencia entre el modelo, las métricas y el HTML de esta entrega. [Prueba de EV3](evidencias/verificacion_dashboard_ev3.json) · [Verificación de los notebooks](evidencias/refactorizacion_notebooks_2026-11-26.json)
 
 ## Identidad visual
 

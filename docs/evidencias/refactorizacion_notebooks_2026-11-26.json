@@ -1,0 +1,147 @@
+{
+  "fecha": "2026-11-26",
+  "version_previa_git": "463154462d4785ceecc772b87cccc24a013a6930",
+  "python": "3.12.4",
+  "dependencias": {
+    "pandas": "3.1.1",
+    "numpy": "2.5.5",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "lightgbm": "4.7.0",
+    "joblib": "1.6.0",
+    "optuna": "5.1.0",
+    "nbconvert": "7.17.2",
+    "ipykernel": "7.4.0"
+  },
+  "notebooks": {
+    "02_Preprocesamiento": {
+      "comando": "python -X utf8 .opencode/skills/gestor-ipynb/ipynb_tool.py run notebooks/02_Preprocesamiento.ipynb",
+      "estado": "ejecutado desde kernel limpio",
+      "celdas_codigo": 9
+    },
+    "05_Modelamiento": {
+      "comando": "python -X utf8 .opencode/skills/gestor-ipynb/ipynb_tool.py run notebooks/05_Modelamiento.ipynb",
+      "estado": "ejecutado desde kernel limpio",
+      "celdas_codigo": 18
+    }
+  },
+  "datos": {
+    "citas": 110521,
+    "columnas": 16,
+    "pacientes": 62298,
+    "inasistencias": 22314,
+    "csv_regenerado_identico": true
+  },
+  "modelo": {
+    "optuna_ejecutado": false,
+    "arboles_identicos": 1050,
+    "variables": 38,
+    "orden_y_categorias_identicos": true,
+    "muestra": {
+      "filas": 1000,
+      "semilla": 42,
+      "metodo": "DataFrame.sample sobre la matriz ordenada del procedimiento anterior, congelada antes de retirar los scripts.",
+      "tolerancia": 1e-09,
+      "diferencia_absoluta_maxima": 0.0,
+      "sha256_probabilidades_anteriores_float64": "b900373cb8a802801a03494327627b1413b8a2612d8c179cc17a1bf4390484c9"
+    },
+    "metricas_json_y_payload_coinciden": true,
+    "umbrales_joblib_anterior": [
+      0.2219,
+      0.2508
+    ],
+    "umbrales_joblib_actual": [
+      0.22192507983773843,
+      0.25082511960234266
+    ],
+    "umbrales_exactos_coinciden_con_json_anterior": true
+  },
+  "comparacion_oof": {
+    "baseline_anterior_con_identificador": {
+      "roc_auc": 0.7363584829743346,
+      "pr_auc": 0.3797374414111757,
+      "umbral": 0.49135671405841147,
+      "exactitud": 0.6251934021588658,
+      "precision": 0.3192736901834689,
+      "recall": 0.7564757551313077,
+      "f1": 0.44903170887422855,
+      "lift20": 1.9310921342737233,
+      "recall20": 0.38621493232947923
+    },
+    "baseline_actual_sin_identificador": {
+      "roc_auc": 0.7389474314901376,
+      "pr_auc": 0.38413045034874044,
+      "umbral": 0.4997198544659873,
+      "exactitud": 0.6246776630685571,
+      "precision": 0.31948917895688533,
+      "recall": 0.7601505781123958,
+      "f1": 0.449890590809628,
+      "lift20": 1.9331088236689964,
+      "recall20": 0.38661826655911086
+    },
+    "modelo_final_antes_y_despues": {
+      "roc_auc": 0.7535010435696474,
+      "pr_auc": 0.4103318227693028,
+      "umbral": 0.22192507983773843,
+      "exactitud": 0.6530342649813158,
+      "precision": 0.3366080345678006,
+      "recall": 0.7401183113740253,
+      "f1": 0.46275410846631265,
+      "lift20": 2.014000476079395,
+      "recall20": 0.4027964506587792
+    },
+    "mejora_frente_a_baseline_actual": {
+      "roc_auc": 0.014553612079509781,
+      "pr_auc": 0.026201372420562363,
+      "exactitud": 0.028356601912758683,
+      "precision": 0.01711885561091525,
+      "recall": -0.020032266738370552,
+      "f1": 0.012863517656684642,
+      "lift20": 0.08089165241039842,
+      "recall20": 0.01617818409966837
+    }
+  },
+  "demo": {
+    "prototipo": "EV3",
+    "archivo": "index.html",
+    "navegador": "Microsoft Edge",
+    "modo": "archivo local sin conexión",
+    "modelo": {
+      "trees": 1050,
+      "features": 38,
+      "rows": 12
+    },
+    "probabilidad_original": "57,4 %",
+    "escenario_anticipacion_cero": "6,6 %",
+    "entregabilidad_primer_intento": "100,0 %",
+    "entregabilidad_tras_reintento": "66,7 %",
+    "intentos_tras_recarga": 3,
+    "errores_javascript": [],
+    "solicitudes_http": [],
+    "bloque_arboles_variables_categorias_identico": true,
+    "metricas_y_umbrales_exactos_verificados_en_navegador": true,
+    "diferencia_absoluta_maxima_javascript_vs_joblib_en_12_citas": 0.0
+  },
+  "sha256": {
+    "data/citas_medicas_preprocesadas.csv": {
+      "anterior": "9818a0c4572cc728ff181599515013852a0c7d45fecdcbcad26857da05b4945c",
+      "actual": "9818a0c4572cc728ff181599515013852a0c7d45fecdcbcad26857da05b4945c"
+    },
+    "models/mejores_hiperparametros.json": {
+      "anterior": "4f6e2459748d4418e1a9f27f550eeff76d5366b07c83d954b05e301fbfc17673",
+      "actual": "4f6e2459748d4418e1a9f27f550eeff76d5366b07c83d954b05e301fbfc17673"
+    },
+    "models/metricas.json": {
+      "anterior": "740b4dc902c0349f3ae46b5a4957f48f70556bdf208e3e26f0a0aeac17adae01",
+      "actual": "ea5669375ca105c523ca6bf3e172b5513707c0c1d55bfb29e5625d997c37cec2"
+    },
+    "models/mejor_modelo_lgbm.joblib": {
+      "anterior": "d6ce6ffc5bf9d792f9f27ae0a4b3881e0bdd9366dead28f208da75406f8e5763",
+      "actual": "d1f826f6c2da2c7eafbaef085c3c2e2249e20eedd0356d651969b139bb94edac"
+    },
+    "index.html": {
+      "anterior": "2bf4af1d91d192971e6085456d2287a31a8e763ca805784c6790edcbf6903b3b",
+      "actual": "3c2e5834730af8e9a4399d709371f1f98cd258684e2901f0f201b671adf6f810"
+    }
+  }
+}

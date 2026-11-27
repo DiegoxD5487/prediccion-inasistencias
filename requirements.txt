@@ -8,3 +8,10 @@ joblib==1.6.0
 # Solo para experimentación y búsqueda de hiperparámetros
 optuna==5.1.0
 catboost==1.2.10
+
+# Ejecución de los notebooks y sus gráficos
+nbformat==5.11.1
+nbconvert==7.17.2
+ipykernel==7.4.0
+matplotlib==3.11.2
+seaborn==0.13.2
