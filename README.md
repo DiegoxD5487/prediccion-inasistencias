@@ -206,7 +206,6 @@ prediccion-inasistencias/
 │
 ├── index.html                               # Acceso al prototipo
 ├── index_prototipo.html                     # Demostración interactiva autónoma (1.050 árboles JS)
-├── AGENTS.md                                # Instrucciones operativas para agentes y entorno
 ├── README.md                                # Documentación principal del proyecto
 ├── requirements.txt                         # Dependencias de Python fijadas
 │
@@ -278,8 +277,6 @@ El cuaderno 02 regenera el CSV limpio. El 05 reutiliza `models/mejores_hiperpara
 
 ### Entrega consolidada del 23 de noviembre de 2026
 
-- [Informe principal EP5/EP6 actualizado](output/pdf/Informe_Principal_EP5_EP6_Actualizado.pdf): ocho páginas con etapas, entregables, decisiones y contraste del plan con Jira.
-- [Presentación para el cliente](output/presentacion/PPT_Gestion_EV3.PPTX): presentación de la defensa en diez diapositivas.
 - [Registro actualizado de desviaciones](output/pdf/Registro_Control_Desviaciones_Actualizado.pdf): incidente T06/T07, respuesta, recuperación declarada y consolidación administrativa, sin horas de retraso.
 - [Evidencias técnicas y de seguimiento](docs/evidencias/): capturas, métricas reproducidas y cortes de estado. Los enlaces a Jira requieren acceso al tablero.
 
